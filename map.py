@@ -33,7 +33,7 @@ def Main():
     ch = input("Type 'Address' or 'Coordinates': ").strip().lower()
 
     if ch == 'address':
-        address = input("Enter address")
+        address = input("Enter address: ")
         coords = GetCoordinates(address)
         if not coords:
             print("Address not found")
