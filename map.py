@@ -5,8 +5,16 @@ import webbrowser
 import os
 import requests
 import re
+from sklearn.cluster import KMeans
+import warnings
 
 OVERPASS_URL = "http://overpass-api.de/api/interpreter"
+os.environ["OMP_NUM_THREADS"] = "1"
+warnings.filterwarnings(
+    "ignore",
+    message="Could not find the number of physical cores*",
+    category=UserWarning
+)
 
 def GetCoordinates(address):
     geolocator = Nominatim(user_agent="geoapi")
@@ -15,6 +23,25 @@ def GetCoordinates(address):
         return (location.latitude, location.longitude)
     else:
         return None
+    
+def ClusterPOIs(pois, k):
+    coords = []
+    for poi in pois:
+        name, latStr, lonStr = ParsePOI(poi)
+        try:
+            coords.append([float(latStr), float(lonStr)])
+        except ValueError:
+            continue
+
+    kmeans = KMeans(n_clusters=k, n_init='auto', random_state=42)
+    kmeans.fit(coords)
+    centers = kmeans.cluster_centers_
+
+    with open("clustering_POIS.txt", "w", encoding="utf-8") as file:
+        for i, center in enumerate(centers):
+            file.write(f"Cluster {i+1} center: ({center[0]}, {center[1]})\n")
+    
+    return centers
     
 def FindRestaurants(lat, lon, rad):
     query = f"""
@@ -105,6 +132,34 @@ def ParsePOI(poi):
     except Exception as e:
         print("Failed to parse:", poi)
         return "Unknown", "0", "0"
+    
+def CreateClusterMap(lat, lon, rad, centers):
+    Map = folium.Map(location=[lat, lon], zoom_start=15)
+
+    folium.Marker(
+        [lat, lon],
+        popup="Center Location",
+        icon=folium.Icon(color="blue")
+    ).add_to(Map)
+
+    Circle(
+        location = (lat, lon),
+        radius = rad * 1000,
+        color = 'blue',
+        fill = True,
+        fill_opacity = 0.3
+    ).add_to(Map)
+
+    for i, center in enumerate(centers):
+        folium.Marker(
+            location=center,
+            popup=f"Cluster {i+1}",
+            icon=folium.Icon(color='purple')
+        ).add_to(Map)
+    
+    Map.save("ClusterMap.html")
+
+    webbrowser.open('file://' + os.path.realpath("ClusterMap.html"))
 
 
 def CreateMap(lat, lon, rad, restaurants, pois):
@@ -175,6 +230,11 @@ def Main():
     pois = FindPOIs(coords[0], coords[1], radius)
 
     CreateMap(coords[0], coords[1], radius, restaurants, pois)
+
+    if len(pois) >= 2:
+        k = min(5, len(pois))
+        centers = ClusterPOIs(pois, k)
+        CreateClusterMap(coords[0], coords[1], radius, centers)
 
 if __name__ == "__main__":
     Main()
