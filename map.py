@@ -23,7 +23,10 @@ def GetCoordinates(address):
         return (location.latitude, location.longitude)
     else:
         return None
-    
+
+# https://www.researchgate.net/publication/266646964_Research_on_K-means_clustering_algorithm_and_its_implementation
+# file:///C:/Users/baseb/Downloads/Research_on_K-means_clustering_algorithm_and_its_i.pdf
+# https://jmlr.org/papers/volume22/20-721/20-721.pdf
 def ClusterPOIs(pois, k):
     coords = []
     for poi in pois:
