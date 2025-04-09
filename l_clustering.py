@@ -7,7 +7,7 @@ def add_laplace_noise(data_point, epsilon):
     return tuple(np.array(data_point) + noise)
 
 # Compact locations into clusters of size l (in this case, l=2)
-def l_clustering(locations, l=2):
+def l_clustering(locations, l=5):
     sorted_locations = sorted(locations)
     clusters = []
     for i in range(0, len(sorted_locations), l):
@@ -18,60 +18,55 @@ def l_clustering(locations, l=2):
 
 # Apply differential privacy to each cluster's centroid
 def compute_noisy_centroids(clusters, epsilon):
-    noisy_compact_locations = []
+    noisy_centroids = []
+    print("Centroid ")
     for cluster in clusters:
         cluster = np.array(cluster)
         centroid = np.mean(cluster, axis=0)
+        print(centroid)
         noisy_centroid = add_laplace_noise(centroid, epsilon)
-        noisy_compact_locations.extend([noisy_centroid] * len(cluster))
-    return noisy_compact_locations
+        noisy_centroids.append(noisy_centroid)
+    return noisy_centroids
 
-# Plot original clusters and noisy centroids
-def visualize_clusters(clusters, noisy_centroids):
-    colors = ['blue', 'green', 'red', 'purple', 'orange']
-    fig, ax = plt.subplots(figsize=(10, 6))
-
-    for i, cluster in enumerate(clusters):
-        cluster = np.array(cluster)
-        ax.scatter(cluster[:, 1], cluster[:, 0], color=colors[i % len(colors)],
-                   label=f"Cluster {i+1} Original")
-        noisy = noisy_centroids[i * len(cluster):(i + 1) * len(cluster)]
-        noisy = np.array(noisy)
-        ax.scatter(noisy[0][1], noisy[0][0], color=colors[i % len(colors)], marker='x', s=100,
-                   label=f"Cluster {i+1} Noisy Centroid")
-
-    ax.set_xlabel("Longitude")
-    ax.set_ylabel("Latitude")
-    ax.set_title("L-Clustering with Differential Privacy")
-    ax.legend()
-    ax.grid(True)
-    plt.tight_layout()
-    plt.show()
 
 # Main function
 def main():
-    # Sample data (2 per cluster for simplicity)
+    # Sample data with 5 cities, each with 5 locations
     locations = [
-        (37.7749, -122.4194), (37.7750, -122.4195),   # San Francisco
-        (34.0522, -118.2437), (34.0523, -118.2436),   # Los Angeles
-        (40.7128, -74.0060), (40.7129, -74.0059)      # New York
+        # San Francisco (5 locations)
+        (37.7749, -122.4194), (37.7750, -122.4195), (37.7747, -122.4190), 
+        (37.7752, -122.4196), (37.7751, -122.4193),
+        
+        # Los Angeles (5 locations)
+        (34.0522, -118.2437), (34.0523, -118.2436), (34.0519, -118.2438), 
+        (34.0525, -118.2440), (34.0518, -118.2435),
+        
+        # New York (5 locations)
+        (40.7128, -74.0060), (40.7129, -74.0059), (40.7130, -74.0057), 
+        (40.7125, -74.0063), (40.7127, -74.0061),
+        
+        # Chicago (5 locations)
+        (41.8781, -87.6298), (41.8782, -87.6300), (41.8779, -87.6297), 
+        (41.8785, -87.6301), (41.8778, -87.6299),
+        
+        # Miami (5 locations)
+        (25.7617, -80.1918), (25.7618, -80.1920), (25.7620, -80.1915), 
+        (25.7619, -80.1917), (25.7621, -80.1919)
     ]
 
-    l = 2
-    epsilon = 2.0  # Higher = less noise
+    l = 5
+    epsilon = 50.0  # Higher = less noise
 
     clusters = l_clustering(locations, l)
     noisy_centroids = compute_noisy_centroids(clusters, epsilon)
 
-    print("Noisy Compact Locations:")
+    print("\nNoisy Compact Locations:")
     for loc in noisy_centroids:
-        print(loc)
+        print((float(loc[0]), float(loc[1])))
 
     print("\nClusters:")
     for cluster in clusters:
         print(cluster)
-
-    visualize_clusters(clusters, noisy_centroids)
 
 if __name__ == "__main__":
     main()
