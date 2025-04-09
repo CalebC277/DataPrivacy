@@ -4,6 +4,7 @@ from folium import Circle
 import webbrowser
 import os
 import requests
+import re
 
 OVERPASS_URL = "http://overpass-api.de/api/interpreter"
 
@@ -81,6 +82,30 @@ def FindPOIs(lat, lon, rad):
 
     return pois
 
+def ParsePOI(poi):
+    # try:
+    #     name, coords = poi.split(" at ")
+    #     lat, lon = coords.strip("()").split(", ")
+    #     return name, lat, lon
+    # except Exception as e:
+    #     print("Failed to parse: ", poi)
+    #     return "Unknown", "0", "0"
+
+    try:
+        name_match = re.match(r"^(.*?) at", poi)
+        coords_match = re.search(r"\(([-\d.]+), ([-\d.]+)\)", poi)
+
+        if name_match and coords_match:
+            name = name_match.group(1).strip()
+            lat = coords_match.group(1)
+            lon = coords_match.group(2)
+            return name, lat, lon
+        else:
+            raise ValueError("No match found")
+    except Exception as e:
+        print("Failed to parse:", poi)
+        return "Unknown", "0", "0"
+
 
 def CreateMap(lat, lon, rad, restaurants, pois):
     Map = folium.Map(location=[lat, lon], zoom_start=13)
@@ -92,6 +117,14 @@ def CreateMap(lat, lon, rad, restaurants, pois):
         color = 'blue',
         fill = True,
         fill_opacity = 0.3
+    ).add_to(Map)
+
+    for poi in pois:
+        name, latStr, lonStr = ParsePOI(poi)
+        folium.Marker(
+            location = [float(latStr), float(lonStr)],
+            popup = name,
+            icon = folium.Icon(color='green', icon='ok-sign')
     ).add_to(Map)
 
     Map.save("Map.html")
