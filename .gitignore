@@ -4,3 +4,7 @@ POIS.txt
 ClusterMap.html
 clustering_POIS.txt
 chosen.txt
+WalkableMapORS.html
+walkable_ors.txt
+WalkableMapOSRM.html
+walkable_osrm.txt
