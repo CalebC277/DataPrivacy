@@ -125,7 +125,7 @@ def CreateMap(lat, lon, rad, pois, poi_counter, noise):
         for poi in pois:
             file.write(f"{poi}\n")
 
-    with open("chosen.txt", "w", encoding="utf-8") as file:
+    with open("chosen_poi.txt", "w", encoding="utf-8") as file:
         sorted_pois = sorted(poi_counter.items(), key=lambda x: x[1], reverse=True)
         for poi, count in sorted_pois:
             file.write(f"{poi} -> chosen {count} times\n")
