@@ -9,7 +9,8 @@ import math
 from tqdm import tqdm
 
 # === CONFIG ===
-NUM_POINTS = 1000
+#NUM_POINTS = 1000
+NUM_POINTS = 10
 OSRM_URL = "http://router.project-osrm.org/route/v1/foot"
 
 def get_coordinates(address):

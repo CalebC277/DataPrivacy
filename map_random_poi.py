@@ -169,7 +169,8 @@ def Main():
         return
 
     poi_counter = defaultdict(int)
-    for x in range(1000):
+    #for x in range(1000):
+    for x in range(10):
         chosen = random.choice(pois)
         poi_counter[chosen] += 1
 
