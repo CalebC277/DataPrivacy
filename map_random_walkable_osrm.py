@@ -10,7 +10,7 @@ from tqdm import tqdm
 
 # === CONFIG ===
 #NUM_POINTS = 1000
-NUM_POINTS = 10
+NUM_POINTS = 1
 OSRM_URL = "http://router.project-osrm.org/route/v1/foot"
 
 def get_coordinates(address):
@@ -94,12 +94,19 @@ def main():
     except ValueError:
         print("Invalid Radius")
         return
+    
+    try:
+        num_runs = int(input("Enter number of runs: "))
+    except ValueError:
+        print("Invalid number of runs")
+        return
 
     center_lat, center_lon = coords
     walkable_points = []
 
     print("Generating walkable locations... (using OSRM)")
-    for _ in tqdm(range(NUM_POINTS), desc="Checking walkability"):
+    #for _ in tqdm(range(NUM_POINTS), desc="Checking walkability"):
+    for _ in tqdm(range(num_runs), desc="Checking walkability"):
         lat, lon = generate_random_point(center_lat, center_lon, radius)
         if is_walkable(center_lat, center_lon, lat, lon):
             walkable_points.append((lat, lon))
