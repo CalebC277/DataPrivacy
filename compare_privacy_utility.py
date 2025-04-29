@@ -37,7 +37,9 @@ def main():
 
     results = []
 
-    for i in range(0, len(lines), 2):
+    num_runs = lines[0]
+    #print(f"{num_runs}")
+    for i in range(1, len(lines), 2):
         address = lines[i]
         radius = float(lines[i + 1])
         coords = get_coordinates(address)
@@ -57,7 +59,7 @@ def main():
             stderr=subprocess.PIPE,
             text=True
         )
-        proc.communicate(input=f"address\n{address}\n{radius}\n0.002\n")
+        proc.communicate(input=f"address\n{address}\n{radius}\n0.002\n{num_runs}\n")
         time.sleep(2)
 
         poi_coords = extract_coords_from_file("POIS.txt")
@@ -73,7 +75,7 @@ def main():
             stderr=subprocess.PIPE,
             text=True
         )
-        proc.communicate(input=f"address\n{address}\n{radius}\n")
+        proc.communicate(input=f"address\n{address}\n{radius}\n{num_runs}\n")
         time.sleep(2)
 
         walkable_coords = extract_coords_from_file("walkable_osrm.txt")

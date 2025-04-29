@@ -162,6 +162,12 @@ def Main():
     except ValueError:
         print("Invalid Noise Value")
         return
+    
+    try:
+        num_runs = int(input("Enter number of runs: "))
+    except ValueError:
+        print("Invalid number of runs")
+        return
 
     pois = FindPOIs(coords[0], coords[1], radius)
     if not pois:
@@ -170,7 +176,7 @@ def Main():
 
     poi_counter = defaultdict(int)
     #for x in range(1000):
-    for x in range(10):
+    for x in range(num_runs):
         chosen = random.choice(pois)
         poi_counter[chosen] += 1
 
