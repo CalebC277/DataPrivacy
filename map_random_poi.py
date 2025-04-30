@@ -94,6 +94,7 @@ def CreateMap(lat, lon, rad, pois, poi_counter, noise):
         fill_opacity=0.3
     ).add_to(Map)
 
+    offset_points = []
     for poi in pois:
         name, latStr, lonStr = ParsePOI(poi)
         latF = float(latStr)
@@ -116,6 +117,12 @@ def CreateMap(lat, lon, rad, pois, poi_counter, noise):
                 fill=True,
                 fill_opacity=1
             ).add_to(Map)
+            offset_points.append((offset_lat, offset_lon))
+
+    with open("random_poi.txt", "w", encoding="utf-8") as file:
+        file.write("Random POI's with noise: (lat, lon): \n")
+        for offset_lat, offset_lon in offset_points:
+            file.write(f"({offset_lat}, {offset_lon})\n")                
 
     Map.save("Map.html")
     webbrowser.open('file://' + os.path.realpath("Map.html"))
@@ -128,7 +135,8 @@ def CreateMap(lat, lon, rad, pois, poi_counter, noise):
     with open("chosen_poi.txt", "w", encoding="utf-8") as file:
         sorted_pois = sorted(poi_counter.items(), key=lambda x: x[1], reverse=True)
         for poi, count in sorted_pois:
-            file.write(f"{poi} -> chosen {count} times\n")
+            if count > 0:
+                file.write(f"{poi} -> chosen {count} times\n")
 
 def Main():
     ch = input("Type 'Address' or 'Coordinates': ").strip().lower()
