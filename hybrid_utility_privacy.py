@@ -315,7 +315,7 @@ def parse_config_file(filename):
 
 def Main():
     # Read configuration from file
-    config = parse_config_file("day_in_a_life.txt")
+    config = parse_config_file("day_in_a_life2.txt")
     
     if not config:
         print("Failed to read configuration file. Make sure day_in_a_life.txt exists and is properly formatted.")
