@@ -176,8 +176,8 @@ def CreateMap(lat, lon, rad, locations, location_counter):
     # Save results to file
     with open("suggested_locations.txt", "w", encoding="utf-8") as file:
         file.write("DISTANCE METRICS:\n")
-        file.write(f"Average Distance: {avg_distance:.2f} km\n")
-        file.write(f"Privacy Distance: {privacy_distance:.2f} km\n\n")
+        file.write(f"Utility: {avg_distance:.2f} km\n")
+        file.write(f"Privacy: {privacy_distance:.2f} km\n\n")
         
         file.write("Suggested locations:\n")
         for loc in chosen_locations:
@@ -273,8 +273,8 @@ def Main():
     
     print("\nDone! Map and results files have been created.")
     print("Output files:")
-    print("- Map.html: Interactive map with user location and suggested locations")
-    print("- suggested_locations.txt: List of suggested locations with distance metrics")
+    print("Map.html: Interactive map with user location and suggested locations")
+    print("suggested_locations.txt: List of suggested locations with distance metrics")
 
 if __name__ == "__main__":
     Main()

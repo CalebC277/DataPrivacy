@@ -4,12 +4,8 @@ location_type=address
 # If using address:
 address=1000 Hilltop Circle
 
-# If using coordinates (these will be used if location_type=coordinates):
-latitude=40.7128
-longitude=-74.0060
-
 # Radius in kilometers to search for locations
 radius=.5
 
 # Number of simulation runs
-num_runs=20
+num_runs=25
