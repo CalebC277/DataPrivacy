@@ -1,11 +1,8 @@
-# Configuration file for day in a life map generator
-# Use either address OR latitude/longitude coordinates
-
 # Location type: 'address' or 'coordinates'
 location_type=address
 
 # If using address:
-address=1000 Hilltop Circle, Baltimore, MD
+address=1000 Hilltop Circle
 
 # If using coordinates (these will be used if location_type=coordinates):
 latitude=40.7128
@@ -14,8 +11,5 @@ longitude=-74.0060
 # Radius in kilometers to search for locations
 radius=.5
 
-# Amount of noise to add to points (in kilometers)
-noise=0
-
 # Number of simulation runs
-num_runs=50
+num_runs=20
