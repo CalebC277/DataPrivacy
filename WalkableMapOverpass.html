@@ -1,0 +1,346 @@
+<!DOCTYPE html>
+<html>
+<head>
+    
+    <meta http-equiv="content-type" content="text/html; charset=UTF-8" />
+    
+        <script>
+            L_NO_TOUCH = false;
+            L_DISABLE_3D = false;
+        </script>
+    
+    <style>html, body {width: 100%;height: 100%;margin: 0;padding: 0;}</style>
+    <style>#map {position:absolute;top:0;bottom:0;right:0;left:0;}</style>
+    <script src="https://cdn.jsdelivr.net/npm/leaflet@1.9.3/dist/leaflet.js"></script>
+    <script src="https://code.jquery.com/jquery-3.7.1.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.2/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/Leaflet.awesome-markers/2.0.2/leaflet.awesome-markers.js"></script>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/leaflet@1.9.3/dist/leaflet.css"/>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.2/dist/css/bootstrap.min.css"/>
+    <link rel="stylesheet" href="https://netdna.bootstrapcdn.com/bootstrap/3.0.0/css/bootstrap-glyphicons.css"/>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@6.2.0/css/all.min.css"/>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/Leaflet.awesome-markers/2.0.2/leaflet.awesome-markers.css"/>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/python-visualization/folium/folium/templates/leaflet.awesome.rotate.min.css"/>
+    
+            <meta name="viewport" content="width=device-width,
+                initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
+            <style>
+                #map_ac2040071c8efc2fd87ed86a43c7dd78 {
+                    position: relative;
+                    width: 100.0%;
+                    height: 100.0%;
+                    left: 0.0%;
+                    top: 0.0%;
+                }
+                .leaflet-container { font-size: 1rem; }
+            </style>
+        
+</head>
+<body>
+    
+    
+            <div class="folium-map" id="map_ac2040071c8efc2fd87ed86a43c7dd78" ></div>
+        
+</body>
+<script>
+    
+    
+            var map_ac2040071c8efc2fd87ed86a43c7dd78 = L.map(
+                "map_ac2040071c8efc2fd87ed86a43c7dd78",
+                {
+                    center: [39.3067887, -76.6205002],
+                    crs: L.CRS.EPSG3857,
+                    ...{
+  "zoom": 13,
+  "zoomControl": true,
+  "preferCanvas": false,
+}
+
+                }
+            );
+
+            
+
+        
+    
+            var tile_layer_dac0cd089490512744ffe450c4162cb9 = L.tileLayer(
+                "https://tile.openstreetmap.org/{z}/{x}/{y}.png",
+                {
+  "minZoom": 0,
+  "maxZoom": 19,
+  "maxNativeZoom": 19,
+  "noWrap": false,
+  "attribution": "\u0026copy; \u003ca href=\"https://www.openstreetmap.org/copyright\"\u003eOpenStreetMap\u003c/a\u003e contributors",
+  "subdomains": "abc",
+  "detectRetina": false,
+  "tms": false,
+  "opacity": 1,
+}
+
+            );
+        
+    
+            tile_layer_dac0cd089490512744ffe450c4162cb9.addTo(map_ac2040071c8efc2fd87ed86a43c7dd78);
+        
+    
+            var marker_4ce1082fc153a8223f79c6b6d5664203 = L.marker(
+                [39.3067887, -76.6205002],
+                {
+}
+            ).addTo(map_ac2040071c8efc2fd87ed86a43c7dd78);
+        
+    
+        var popup_2eb420e13774bc763d75aceb375530a3 = L.popup({
+  "maxWidth": "100%",
+});
+
+        
+            
+                var html_fcfb4a9d53ab5c4d7cd75a4f4c63ab02 = $(`<div id="html_fcfb4a9d53ab5c4d7cd75a4f4c63ab02" style="width: 100.0%; height: 100.0%;">Center Location</div>`)[0];
+                popup_2eb420e13774bc763d75aceb375530a3.setContent(html_fcfb4a9d53ab5c4d7cd75a4f4c63ab02);
+            
+        
+
+        marker_4ce1082fc153a8223f79c6b6d5664203.bindPopup(popup_2eb420e13774bc763d75aceb375530a3)
+        ;
+
+        
+    
+    
+            var circle_5b5cdfb87399f222b4f45261c5643210 = L.circle(
+                [39.3067887, -76.6205002],
+                {"bubblingMouseEvents": true, "color": "blue", "dashArray": null, "dashOffset": null, "fill": true, "fillColor": "blue", "fillOpacity": 0.2, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "opacity": 1.0, "radius": 500.0, "stroke": true, "weight": 3}
+            ).addTo(map_ac2040071c8efc2fd87ed86a43c7dd78);
+        
+    
+            var circle_marker_2576717fd3c5e2ae56de2d9c30dda402 = L.circleMarker(
+                [39.3038545, -76.6227803],
+                {"bubblingMouseEvents": true, "color": "black", "dashArray": null, "dashOffset": null, "fill": true, "fillColor": "black", "fillOpacity": 1, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "opacity": 1.0, "radius": 3, "stroke": true, "weight": 3}
+            ).addTo(map_ac2040071c8efc2fd87ed86a43c7dd78);
+        
+    
+        var popup_4cbe49b54c50da5f70cbb57da9a5c706 = L.popup({
+  "maxWidth": "100%",
+});
+
+        
+            
+                var html_e092a99a547f2ad3823ca46f8598a70e = $(`<div id="html_e092a99a547f2ad3823ca46f8598a70e" style="width: 100.0%; height: 100.0%;">Dolphin Street highway=secondary</div>`)[0];
+                popup_4cbe49b54c50da5f70cbb57da9a5c706.setContent(html_e092a99a547f2ad3823ca46f8598a70e);
+            
+        
+
+        circle_marker_2576717fd3c5e2ae56de2d9c30dda402.bindPopup(popup_4cbe49b54c50da5f70cbb57da9a5c706)
+        ;
+
+        
+    
+    
+            var circle_marker_4ea574863e830e2b0615ea7e2b3a1d7a = L.circleMarker(
+                [39.3068078, -76.6200545],
+                {"bubblingMouseEvents": true, "color": "black", "dashArray": null, "dashOffset": null, "fill": true, "fillColor": "black", "fillOpacity": 1, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "opacity": 1.0, "radius": 3, "stroke": true, "weight": 3}
+            ).addTo(map_ac2040071c8efc2fd87ed86a43c7dd78);
+        
+    
+        var popup_9840b2a695c984397aee5024fe42f1e2 = L.popup({
+  "maxWidth": "100%",
+});
+
+        
+            
+                var html_12a5764d9fd45b7a4a208bbf8044c08e = $(`<div id="html_12a5764d9fd45b7a4a208bbf8044c08e" style="width: 100.0%; height: 100.0%;">Dolphin Street highway=residential</div>`)[0];
+                popup_9840b2a695c984397aee5024fe42f1e2.setContent(html_12a5764d9fd45b7a4a208bbf8044c08e);
+            
+        
+
+        circle_marker_4ea574863e830e2b0615ea7e2b3a1d7a.bindPopup(popup_9840b2a695c984397aee5024fe42f1e2)
+        ;
+
+        
+    
+    
+            var circle_marker_ad1ff7730385512d1694ae95c5009d4f = L.circleMarker(
+                [39.310356, -76.6171671],
+                {"bubblingMouseEvents": true, "color": "black", "dashArray": null, "dashOffset": null, "fill": true, "fillColor": "black", "fillOpacity": 1, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "opacity": 1.0, "radius": 3, "stroke": true, "weight": 3}
+            ).addTo(map_ac2040071c8efc2fd87ed86a43c7dd78);
+        
+    
+        var popup_1cb7c529b82bd720839950c899aa46ea = L.popup({
+  "maxWidth": "100%",
+});
+
+        
+            
+                var html_b5f00d15d0d0d7c5c524fc959d46d338 = $(`<div id="html_b5f00d15d0d0d7c5c524fc959d46d338" style="width: 100.0%; height: 100.0%;">West Trenton Street highway=service</div>`)[0];
+                popup_1cb7c529b82bd720839950c899aa46ea.setContent(html_b5f00d15d0d0d7c5c524fc959d46d338);
+            
+        
+
+        circle_marker_ad1ff7730385512d1694ae95c5009d4f.bindPopup(popup_1cb7c529b82bd720839950c899aa46ea)
+        ;
+
+        
+    
+    
+            var circle_marker_504eb4cd4320267fea012c21bd487228 = L.circleMarker(
+                [39.309047, -76.6227434],
+                {"bubblingMouseEvents": true, "color": "black", "dashArray": null, "dashOffset": null, "fill": true, "fillColor": "black", "fillOpacity": 1, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "opacity": 1.0, "radius": 3, "stroke": true, "weight": 3}
+            ).addTo(map_ac2040071c8efc2fd87ed86a43c7dd78);
+        
+    
+        var popup_6db74927597ac9cfd5d1a97a95473870 = L.popup({
+  "maxWidth": "100%",
+});
+
+        
+            
+                var html_587caa019f4455e78d65c0096694ea64 = $(`<div id="html_587caa019f4455e78d65c0096694ea64" style="width: 100.0%; height: 100.0%;">West Mount Royal Avenue highway=secondary</div>`)[0];
+                popup_6db74927597ac9cfd5d1a97a95473870.setContent(html_587caa019f4455e78d65c0096694ea64);
+            
+        
+
+        circle_marker_504eb4cd4320267fea012c21bd487228.bindPopup(popup_6db74927597ac9cfd5d1a97a95473870)
+        ;
+
+        
+    
+    
+            var circle_marker_d4571a06a16728b0a75876532804d1c1 = L.circleMarker(
+                [39.3037778, -76.6220535],
+                {"bubblingMouseEvents": true, "color": "black", "dashArray": null, "dashOffset": null, "fill": true, "fillColor": "black", "fillOpacity": 1, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "opacity": 1.0, "radius": 3, "stroke": true, "weight": 3}
+            ).addTo(map_ac2040071c8efc2fd87ed86a43c7dd78);
+        
+    
+        var popup_2136f992ac1dfcb80576feaf2bca3eb6 = L.popup({
+  "maxWidth": "100%",
+});
+
+        
+            
+                var html_0f639951fe84cefe489b25a5f43a65bb = $(`<div id="html_0f639951fe84cefe489b25a5f43a65bb" style="width: 100.0%; height: 100.0%;">Walkable Area (service) highway=service</div>`)[0];
+                popup_2136f992ac1dfcb80576feaf2bca3eb6.setContent(html_0f639951fe84cefe489b25a5f43a65bb);
+            
+        
+
+        circle_marker_d4571a06a16728b0a75876532804d1c1.bindPopup(popup_2136f992ac1dfcb80576feaf2bca3eb6)
+        ;
+
+        
+    
+    
+            var circle_marker_66f3f54815834b5cc145231e46c72e6a = L.circleMarker(
+                [39.3065956, -76.6166447],
+                {"bubblingMouseEvents": true, "color": "black", "dashArray": null, "dashOffset": null, "fill": true, "fillColor": "black", "fillOpacity": 1, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "opacity": 1.0, "radius": 3, "stroke": true, "weight": 3}
+            ).addTo(map_ac2040071c8efc2fd87ed86a43c7dd78);
+        
+    
+        var popup_5ed18894fb20c4f48d493a7cf2ffa9ad = L.popup({
+  "maxWidth": "100%",
+});
+
+        
+            
+                var html_a4f553ef318c33d58d03cb1ff79e7ffc = $(`<div id="html_a4f553ef318c33d58d03cb1ff79e7ffc" style="width: 100.0%; height: 100.0%;">West Oliver Street highway=unclassified</div>`)[0];
+                popup_5ed18894fb20c4f48d493a7cf2ffa9ad.setContent(html_a4f553ef318c33d58d03cb1ff79e7ffc);
+            
+        
+
+        circle_marker_66f3f54815834b5cc145231e46c72e6a.bindPopup(popup_5ed18894fb20c4f48d493a7cf2ffa9ad)
+        ;
+
+        
+    
+    
+            var circle_marker_64fc5c8e9b08fbc4d5663e1b1680886d = L.circleMarker(
+                [39.3047483, -76.6251558],
+                {"bubblingMouseEvents": true, "color": "black", "dashArray": null, "dashOffset": null, "fill": true, "fillColor": "black", "fillOpacity": 1, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "opacity": 1.0, "radius": 3, "stroke": true, "weight": 3}
+            ).addTo(map_ac2040071c8efc2fd87ed86a43c7dd78);
+        
+    
+        var popup_3986f91e16201a2df442cb41aa0973d7 = L.popup({
+  "maxWidth": "100%",
+});
+
+        
+            
+                var html_31eca1c19fbc558480924dc3d2888c64 = $(`<div id="html_31eca1c19fbc558480924dc3d2888c64" style="width: 100.0%; height: 100.0%;">Linden Green highway=footway</div>`)[0];
+                popup_3986f91e16201a2df442cb41aa0973d7.setContent(html_31eca1c19fbc558480924dc3d2888c64);
+            
+        
+
+        circle_marker_64fc5c8e9b08fbc4d5663e1b1680886d.bindPopup(popup_3986f91e16201a2df442cb41aa0973d7)
+        ;
+
+        
+    
+    
+            var circle_marker_09115286c63635059faf609973797204 = L.circleMarker(
+                [39.3087817, -76.6154503],
+                {"bubblingMouseEvents": true, "color": "black", "dashArray": null, "dashOffset": null, "fill": true, "fillColor": "black", "fillOpacity": 1, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "opacity": 1.0, "radius": 3, "stroke": true, "weight": 3}
+            ).addTo(map_ac2040071c8efc2fd87ed86a43c7dd78);
+        
+    
+        var popup_d1c7507d4e19b2facfb1376ec41725dd = L.popup({
+  "maxWidth": "100%",
+});
+
+        
+            
+                var html_ac47e176352721c5b6adae071e3ad8fb = $(`<div id="html_ac47e176352721c5b6adae071e3ad8fb" style="width: 100.0%; height: 100.0%;">East Lanvale Street highway=secondary</div>`)[0];
+                popup_d1c7507d4e19b2facfb1376ec41725dd.setContent(html_ac47e176352721c5b6adae071e3ad8fb);
+            
+        
+
+        circle_marker_09115286c63635059faf609973797204.bindPopup(popup_d1c7507d4e19b2facfb1376ec41725dd)
+        ;
+
+        
+    
+    
+            var circle_marker_0e958d0fa03d63832125dd2cd9b162e0 = L.circleMarker(
+                [39.3054488, -76.6153744],
+                {"bubblingMouseEvents": true, "color": "black", "dashArray": null, "dashOffset": null, "fill": true, "fillColor": "black", "fillOpacity": 1, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "opacity": 1.0, "radius": 3, "stroke": true, "weight": 3}
+            ).addTo(map_ac2040071c8efc2fd87ed86a43c7dd78);
+        
+    
+        var popup_fd8a709ab0e8bfb2a2577f9ae4629584 = L.popup({
+  "maxWidth": "100%",
+});
+
+        
+            
+                var html_0acdcffa7c6296747cba87d4547a1e33 = $(`<div id="html_0acdcffa7c6296747cba87d4547a1e33" style="width: 100.0%; height: 100.0%;">East Mount Royal Avenue highway=secondary</div>`)[0];
+                popup_fd8a709ab0e8bfb2a2577f9ae4629584.setContent(html_0acdcffa7c6296747cba87d4547a1e33);
+            
+        
+
+        circle_marker_0e958d0fa03d63832125dd2cd9b162e0.bindPopup(popup_fd8a709ab0e8bfb2a2577f9ae4629584)
+        ;
+
+        
+    
+    
+            var circle_marker_885dff99c318d31e5190875c704dc490 = L.circleMarker(
+                [39.309838, -76.6254261],
+                {"bubblingMouseEvents": true, "color": "black", "dashArray": null, "dashOffset": null, "fill": true, "fillColor": "black", "fillOpacity": 1, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "opacity": 1.0, "radius": 3, "stroke": true, "weight": 3}
+            ).addTo(map_ac2040071c8efc2fd87ed86a43c7dd78);
+        
+    
+        var popup_a9d40d4e534574f1e40f771767e283b7 = L.popup({
+  "maxWidth": "100%",
+});
+
+        
+            
+                var html_13177e2d4deff1b949ebec6839dff025 = $(`<div id="html_13177e2d4deff1b949ebec6839dff025" style="width: 100.0%; height: 100.0%;">John Street highway=service</div>`)[0];
+                popup_a9d40d4e534574f1e40f771767e283b7.setContent(html_13177e2d4deff1b949ebec6839dff025);
+            
+        
+
+        circle_marker_885dff99c318d31e5190875c704dc490.bindPopup(popup_a9d40d4e534574f1e40f771767e283b7)
+        ;
+
+        
+    
+</script>
+</html>

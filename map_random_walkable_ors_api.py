@@ -68,7 +68,6 @@ def create_map(center_lat, center_lon, radius_km, walkable_points):
             fill=True,
             fill_opacity=1
         ).add_to(Map)
-
     Map.save("WalkableMapORS.html")
     webbrowser.open('file://' + os.path.realpath("WalkableMapORS.html"))
 

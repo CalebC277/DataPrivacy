@@ -29,15 +29,48 @@ def generate_random_point(lat, lon, radius_km):
     dy = r * math.sin(angle)
     return lat + dy, lon + dx
 
+def is_routable(lat, lon):
+    url = f"http://router.project-osrm.org/nearest/v1/foot/{lon},{lat}?number=1"
+    try:
+        response = requests.get(url, timeout=3)
+        if response.status_code != 200:
+            return False
+        data = response.json()
+        return "waypoints" in data and len(data["waypoints"]) > 0
+    except Exception as e:
+        print("Nearest check error:", e)
+        return False
+
+
+# def is_walkable(lat1, lon1, lat2, lon2):
+#     url = f"{OSRM_URL}/{lon1},{lat1};{lon2},{lat2}?overview=false"
+#     print(url)
+#     try:
+#         response = requests.get(url)
+#         data = response.json()
+#         return "routes" in data and len(data["routes"]) > 0
+#     except Exception as e:
+#         print("Routing error:", e)
+#         return False
+
 def is_walkable(lat1, lon1, lat2, lon2):
     url = f"{OSRM_URL}/{lon1},{lat1};{lon2},{lat2}?overview=false"
+    print(url)
     try:
+        #response = requests.get(url, timeout=5)
         response = requests.get(url)
+        if response.status_code != 200:
+            print(f"Routing error: HTTP {response.status_code}")
+            return False
+        if not response.content.strip():
+            print("Routing error: Empty response")
+            return False
         data = response.json()
         return "routes" in data and len(data["routes"]) > 0
     except Exception as e:
         print("Routing error:", e)
         return False
+
 
 def create_map(center_lat, center_lon, radius_km, walkable_points):
     Map = folium.Map(location=[center_lat, center_lon], zoom_start=13)
@@ -106,10 +139,18 @@ def main():
 
     print("Generating walkable locations... (using OSRM)")
     #for _ in tqdm(range(NUM_POINTS), desc="Checking walkability"):
-    for _ in tqdm(range(num_runs), desc="Checking walkability"):
-        lat, lon = generate_random_point(center_lat, center_lon, radius)
-        if is_walkable(center_lat, center_lon, lat, lon):
-            walkable_points.append((lat, lon))
+    # for _ in tqdm(range(num_runs), desc="Checking walkability"):
+    #     lat, lon = generate_random_point(center_lat, center_lon, radius)
+    #     if is_routable(lat, lon) and is_walkable(center_lat, center_lon, lat, lon):
+    #         walkable_points.append((lat, lon))
+
+    with tqdm(total=num_runs, desc="Checking walkability") as pbar:
+        while len(walkable_points) < num_runs:
+            lat, lon = generate_random_point(center_lat, center_lon, radius)
+            if is_routable(lat, lon) and is_walkable(center_lat, center_lon, lat, lon):
+                walkable_points.append((lat, lon))
+                pbar.update(1)
+
 
     print(f"Found {len(walkable_points)} walkable points.")
     save_to_file(walkable_points)
