@@ -1,26 +1,26 @@
-Run,Location,Utility(km),Privacy(km),CumulativePrivacy(km)
-1,Commons Drive Garage at (39.2534969, -76.7097576) [amenity=parking_space, parking_space=disabled],0.1440,0.1867,0.1828
-2,Lot 4 at (39.2550256, -76.7084505) [amenity=parking_space, parking_space=disabled],0.2973,0.1867,0.1867
-3,The Coffee Shop at (39.2529353, -76.7134825) [amenity=restaurant],0.3979,0.1867,0.1775
-4,Lot 12 at (39.2564565, -76.7066434) [amenity=parking_space, capacity=4, parking_space=disabled],0.4941,0.1867,0.1883
-5,Lot 28 at (39.2512394, -76.7069575) [amenity=parking, operator=University of Maryland Baltimore County, parking=surface],0.2110,0.1867,0.1799
-6,Lot 12 at (39.2564565, -76.7066434) [amenity=parking_space, capacity=4, parking_space=disabled],0.4941,0.1867,0.1900
-7,Lot 26 at (39.2528446, -76.705164) [amenity=parking_space, capacity=2, parking_space=disabled],0.3274,0.1867,0.1892
-8,Retriever Activities Center at (39.2528576, -76.7125528) [access=customers, addr:floor=G, addr:state=MD, building=university, building:material=brick, check_date=2025-03-15, ele=60, gnis:feature_id=2110514, leisure=sports_centre, level=0, roof:levels=1, roof:shape=flat, source=survey;USGS Geonames, sport=basketball],0.3175,0.1867,0.1816
-9,Lot 11 at (39.2561458, -76.7082348) [amenity=parking_space, capacity=4, parking_space=disabled],0.4232,0.1867,0.1884
-10,Janet and Walter Sondheim Hall at (39.2532195, -76.7131024) [board_type=history, information=board, tourism=information],0.3723,0.1867,0.1825
-11,Chick-fil-A at (39.254078, -76.7131244) [addr:city=Baltimore, addr:housenumber=1000, addr:postcode=21250, addr:state=MD, addr:street=Hilltop Circle, amenity=fast_food, branch=University of Maryland- Baltimore County, brand=Chick-fil-A, brand:wikidata=Q491516, check_date=2025-03-15, cuisine=chicken, delivery=no, drive_through=no, indoor_seating=yes, internet_access=wlan, opening_hours=Mo-Th 09:00-20:00; Fr 09:00-16:00; Sa 11:00-17:00; Su off, outdoor_seating=yes, phone=+1 443-612-8390, ref=80453, takeaway=yes, website=https://www.chick-fil-a.com/locations/md/university-of-maryland-baltimore-county],0.4086,0.1867,0.1802
-12,Smoking Shelter #2 at (39.2540364, -76.7082834) [amenity=shelter, designation=Designated Smoking Area, shelter_type=weather_shelter],0.1924,0.1867,0.1805
-13,PNC Bank at (39.2545706, -76.7130695) [amenity=atm, check_date=2025-03-15, currency:USD=yes, drive_through=no, indoor=no, lit=yes, opening_hours=24/7, source=survey, wheelchair=yes],0.4327,0.1867,0.1803
-14,Retriever Soccer Park at (39.2512886, -76.7051) [leisure=stadium, sport=soccer, wikipedia=en:Retriever Soccer Park],0.3503,0.1867,0.1741
-15,Thomas V Marsho Garden at (39.2546832, -76.7121171) [leisure=garden],0.3763,0.1867,0.1748
-16,Lot 3 at (39.2544791, -76.7071504) [access=customers, amenity=parking, fee=no, operator=University of Maryland Baltimore County, parking=surface],0.2789,0.1867,0.1768
-17,Lot 1 at (39.2535528, -76.7090198) [amenity=parking_space, capacity=2, parking_space=disabled],0.1310,0.1867,0.1756
-18,University of Maryland Baltimore County at (39.2524401, -76.7101084) [addr:city=Baltimore, addr:housenumber=1000, addr:postcode=21250, addr:state=MD, addr:street=Hilltop Circle, alt_name=UMBC, amenity=university, gnis:feature_id=592337, type=multipolygon, website=https://umbc.edu/, wikidata=Q735049],0.1027,0.1867,0.1713
-19,Stadium Lot at (39.2533099, -76.7060089) [amenity=parking_space, capacity=4, parking_space=disabled],0.2711,0.1867,0.1707
-20,Lot 28 at (39.2512394, -76.7069575) [amenity=parking, operator=University of Maryland Baltimore County, parking=surface],0.2110,0.1867,0.1649
-21,lot 2 at (39.2544101, -76.7085721) [amenity=parking_space, parking_space=disabled],0.2280,0.1867,0.1663
-22,Center Road at (39.2558614, -76.7094044) [amenity=parking_space, capacity=2, parking_space=disabled],0.3897,0.1867,0.1706
-23,UMBC Bookstore at (39.2546765, -76.7108831) [addr:floor=1, check_date=2025-03-15, check_date:opening_hours=2023-04-01, level=1, opening_hours:signed=no, payment:credit_cards=yes, payment:debit_cards=yes, shop=books, wheelchair=yes],0.3066,0.1867,0.1717
-24,Lot 1 at (39.2533317, -76.7086432) [access=private, amenity=parking, operator=University of Maryland Baltimore County, parking=surface],0.1088,0.1867,0.1704
-25,Smoking Shelter #2 at (39.2540364, -76.7082834) [amenity=shelter, designation=Designated Smoking Area, shelter_type=weather_shelter],0.1924,0.1867,0.1708
+Run,Location,Utility(km),Privacy(km)
+1,Lot 1 at (39.2536141, -76.7081817) [access=private, amenity=parking, operator=University of Maryland Baltimore County, parking=surface],0.1515,0.1515
+2,The Commons at (39.2551512, -76.7113318) [amenity=food_court, check_date=2025-03-15, indoor_seating=yes, operator=UMBC, outdoor_seating=yes],0.3720,0.2344
+3,Lot 26 at (39.2531032, -76.7049025) [amenity=parking_space, capacity=2, parking_space=disabled],0.3551,0.1880
+4,Lot 23 at (39.2546518, -76.7057234) [amenity=parking_space, capacity=2, parking_space=disabled],0.3737,0.2284
+5,Lot 1 at (39.2536141, -76.7081817) [access=private, amenity=parking, operator=University of Maryland Baltimore County, parking=surface],0.1515,0.2129
+6,PNC Bank at (39.2545706, -76.7130695) [amenity=atm, check_date=2025-03-15, currency:USD=yes, drive_through=no, indoor=no, lit=yes, opening_hours=24/7, source=survey, wheelchair=yes],0.4327,0.1959
+7,Event Center at (39.2523107, -76.7087002) [amenity=parking_space, capacity=4, parking_space=disabled],0.0202,0.1673
+8,Lot 1 at (39.2533317, -76.7086432) [access=private, amenity=parking, operator=University of Maryland Baltimore County, parking=surface],0.1088,0.1600
+9,Lot 23 at (39.2548019, -76.705241) [amenity=parking, operator=University of Maryland Baltimore County, parking=surface],0.4159,0.1803
+10,Arbutus Middle School at (39.2491702, -76.7039754) [amenity=school, gnis:feature_id=594075, grades=6-8, isced:level=2, operator=Baltimore County Public Schools, operator:short=BCPS, operator:type=public, operator:wikidata=Q4852849],0.5552,0.1520
+11,Lot 12 at (39.2564565, -76.7066434) [amenity=parking_space, capacity=4, parking_space=disabled],0.4941,0.1818
+12,Loading Dock at (39.2564486, -76.7067561) [access=private, amenity=parking, parking=surface],0.4895,0.2066
+13,Einstein Bros. Bagels at (39.2563441, -76.7116592) [addr:city=Baltimore, addr:housenumber=1000, addr:postcode=21250, addr:state=MD, addr:street=Hilltop Circle, addr:unit=C, alt_name=Einstein Brothers Bagels, amenity=fast_food, branch=UMBC - AOK Library, brand=Einstein Bros. Bagels, brand:wikidata=Q5349788, cuisine=bagel, delivery=no, drive_through=no, opening_hours=Mo-Th 09:00-22:00; Fr 09:00-15:00; Sa 11:00-18:00; Su 13:00-19:00, takeaway=yes, website=https://locations.einsteinbros.com/us/md/baltimore/1000-hilltop-circle, wheelchair=yes],0.5003,0.2119
+14,Retriever Soccer Park at (39.2512886, -76.7051) [leisure=stadium, sport=soccer, wikipedia=en:Retriever Soccer Park],0.3503,0.2000
+15,Lot 4 at (39.2550256, -76.7084505) [amenity=parking_space, parking_space=disabled],0.2973,0.2050
+16,The Commons at (39.2551512, -76.7113318) [amenity=food_court, check_date=2025-03-15, indoor_seating=yes, operator=UMBC, outdoor_seating=yes],0.3720,0.2039
+17,Janet and Walter Sondheim Hall at (39.2532195, -76.7131024) [board_type=history, information=board, tourism=information],0.3723,0.1899
+18,Center Road at (39.2558614, -76.7094044) [amenity=parking_space, capacity=2, parking_space=disabled],0.3897,0.1995
+19,True Grit's Dining Hall at (39.2558863, -76.7077485) [amenity=restaurant],0.4030,0.2102
+20,Walter Sondheim Sculpture at (39.2536779, -76.7128769) [artist:wikidata=Q4777004, artist_name=Antonio Tobias Mendez, artwork_type=sculpture, material=metal, start_date=2005, tourism=artwork],0.3703,0.2034
+21,Starbucks at (39.2541842, -76.7130756) [addr:city=Baltimore, addr:housenumber=1000, addr:postcode=21250, addr:state=MD, addr:street=Hilltop Circle, amenity=cafe, branch=UMBC University Center, brand=Starbucks, brand:wikidata=Q37158, check_date=2025-03-15, cuisine=coffee_shop, indoor_seating=yes, official_name=Starbucks Coffee, opening_hours=Mo-Th 08:00-18:00; Fr 08:00-16:00; Sa off; Su 14:00-18:00, outdoor_seating=yes, phone=+1 443-612-8390, ref=18717, takeaway=yes, website=https://www.starbucks.com/store-locator/store/18717/umbc-university-center-1000-hilltop-circle-baltimore-md-212500001-us],0.4105,0.2013
+22,Lot 23 at (39.2546518, -76.7057234) [amenity=parking_space, capacity=2, parking_space=disabled],0.3737,0.2048
+23,The Quad at (39.2541495, -76.7117221) [leisure=park],0.3117,0.2035
+24,Stadium Lot at (39.2534051, -76.7062316) [access=private, amenity=parking, operator=University of Maryland Baltimore County, parking=surface],0.2580,0.2006
+25,Stadium Lot at (39.2534051, -76.7062316) [access=private, amenity=parking, operator=University of Maryland Baltimore County, parking=surface],0.2580,0.1983
