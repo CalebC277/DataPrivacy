@@ -1,24 +1,32 @@
-DISTANCE METRICS:
-Average Distance: 0.35 km
-Privacy Distance: 0.20 km
+FINAL AGGREGATED METRICS:
+Average Utility (this run): 0.2984 km
+Privacy with previous locations: 0.1867 km
+Final Privacy with all locations: 0.1708 km
 
-Suggested locations:
+Previously selected locations: 25
+Newly selected locations: 25
+Total locations in history: 50
+
+Locations selected in this run:
+Commons Drive Garage at (39.2534969, -76.7097576) [amenity=parking_space, parking_space=disabled] -> suggested 1 times
+Lot 4 at (39.2550256, -76.7084505) [amenity=parking_space, parking_space=disabled] -> suggested 1 times
+The Coffee Shop at (39.2529353, -76.7134825) [amenity=restaurant] -> suggested 1 times
+Lot 12 at (39.2564565, -76.7066434) [amenity=parking_space, capacity=4, parking_space=disabled] -> suggested 2 times
+Lot 28 at (39.2512394, -76.7069575) [amenity=parking, operator=University of Maryland Baltimore County, parking=surface] -> suggested 2 times
+Lot 26 at (39.2528446, -76.705164) [amenity=parking_space, capacity=2, parking_space=disabled] -> suggested 1 times
+Retriever Activities Center at (39.2528576, -76.7125528) [access=customers, addr:floor=G, addr:state=MD, building=university, building:material=brick, check_date=2025-03-15, ele=60, gnis:feature_id=2110514, leisure=sports_centre, level=0, roof:levels=1, roof:shape=flat, source=survey;USGS Geonames, sport=basketball] -> suggested 1 times
+Lot 11 at (39.2561458, -76.7082348) [amenity=parking_space, capacity=4, parking_space=disabled] -> suggested 1 times
+Janet and Walter Sondheim Hall at (39.2532195, -76.7131024) [board_type=history, information=board, tourism=information] -> suggested 1 times
+Chick-fil-A at (39.254078, -76.7131244) [addr:city=Baltimore, addr:housenumber=1000, addr:postcode=21250, addr:state=MD, addr:street=Hilltop Circle, amenity=fast_food, branch=University of Maryland- Baltimore County, brand=Chick-fil-A, brand:wikidata=Q491516, check_date=2025-03-15, cuisine=chicken, delivery=no, drive_through=no, indoor_seating=yes, internet_access=wlan, opening_hours=Mo-Th 09:00-20:00; Fr 09:00-16:00; Sa 11:00-17:00; Su off, outdoor_seating=yes, phone=+1 443-612-8390, ref=80453, takeaway=yes, website=https://www.chick-fil-a.com/locations/md/university-of-maryland-baltimore-county] -> suggested 1 times
+Smoking Shelter #2 at (39.2540364, -76.7082834) [amenity=shelter, designation=Designated Smoking Area, shelter_type=weather_shelter] -> suggested 2 times
+PNC Bank at (39.2545706, -76.7130695) [amenity=atm, check_date=2025-03-15, currency:USD=yes, drive_through=no, indoor=no, lit=yes, opening_hours=24/7, source=survey, wheelchair=yes] -> suggested 1 times
 Retriever Soccer Park at (39.2512886, -76.7051) [leisure=stadium, sport=soccer, wikipedia=en:Retriever Soccer Park] -> suggested 1 times
-Walkable Area (footway) at (39.2557454, -76.7114689) [highway=footway] -> suggested 1 times
-Walkable Area (footway) at (39.2549289, -76.7068955) [highway=footway] -> suggested 1 times
-Walkable Area (service) at (39.2541723, -76.7042914) [highway=service] -> suggested 1 times
-Walkable Area (service) at (39.2528913, -76.706479) [highway=service] -> suggested 1 times
-Walkable Area (footway) at (39.2567532, -76.7104133) [highway=footway] -> suggested 1 times
-Walkable Area (footway) at (39.2559909, -76.70741) [highway=footway] -> suggested 1 times
-Walkable Area (footway) at (39.2549769, -76.7101329) [highway=footway] -> suggested 1 times
-Walkable Area (footway) at (39.254018, -76.7049789) [highway=footway] -> suggested 1 times
-Walkable Area (footway) at (39.2542578, -76.713026) [highway=footway] -> suggested 1 times
-Walkable Area (footway) at (39.2530296, -76.712822) [highway=footway] -> suggested 1 times
-Walkable Area (footway) at (39.2531842, -76.7129001) [highway=footway] -> suggested 1 times
-Walkable Area (steps) at (39.2531894, -76.7127514) [highway=steps] -> suggested 2 times
-Walkable Area (footway) at (39.25671, -76.7104158) [highway=footway] -> suggested 1 times
-Walkable Area (footway) at (39.2544652, -76.7078961) [highway=footway] -> suggested 1 times
-Walkable Area (footway) at (39.2515495, -76.7073178) [highway=footway] -> suggested 1 times
-Walkable Area (footway) at (39.255975, -76.7073049) [highway=footway] -> suggested 1 times
-Walkable Area (footway) at (39.2543199, -76.7080159) [highway=footway] -> suggested 1 times
-Walkable Area (service) at (39.2519842, -76.7118182) [highway=service] -> suggested 1 times
+Thomas V Marsho Garden at (39.2546832, -76.7121171) [leisure=garden] -> suggested 1 times
+Lot 3 at (39.2544791, -76.7071504) [access=customers, amenity=parking, fee=no, operator=University of Maryland Baltimore County, parking=surface] -> suggested 1 times
+Lot 1 at (39.2535528, -76.7090198) [amenity=parking_space, capacity=2, parking_space=disabled] -> suggested 1 times
+University of Maryland Baltimore County at (39.2524401, -76.7101084) [addr:city=Baltimore, addr:housenumber=1000, addr:postcode=21250, addr:state=MD, addr:street=Hilltop Circle, alt_name=UMBC, amenity=university, gnis:feature_id=592337, type=multipolygon, website=https://umbc.edu/, wikidata=Q735049] -> suggested 1 times
+Stadium Lot at (39.2533099, -76.7060089) [amenity=parking_space, capacity=4, parking_space=disabled] -> suggested 1 times
+lot 2 at (39.2544101, -76.7085721) [amenity=parking_space, parking_space=disabled] -> suggested 1 times
+Center Road at (39.2558614, -76.7094044) [amenity=parking_space, capacity=2, parking_space=disabled] -> suggested 1 times
+UMBC Bookstore at (39.2546765, -76.7108831) [addr:floor=1, check_date=2025-03-15, check_date:opening_hours=2023-04-01, level=1, opening_hours:signed=no, payment:credit_cards=yes, payment:debit_cards=yes, shop=books, wheelchair=yes] -> suggested 1 times
+Lot 1 at (39.2533317, -76.7086432) [access=private, amenity=parking, operator=University of Maryland Baltimore County, parking=surface] -> suggested 1 times

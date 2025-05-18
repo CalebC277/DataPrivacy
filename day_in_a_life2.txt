@@ -2,7 +2,7 @@
 location_type=address
 
 # If using address:
-address=1000 Hilltop Circle
+address=1000 Hilltop Circle, Baltimore, MD
 
 # Radius in kilometers to search for locations
 radius=.5
