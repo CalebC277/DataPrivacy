@@ -15,7 +15,7 @@ The three methods are listed below.
 
 Each tool uses OpenStreetMaps Overpass API to find locations. When each method is built and compiled it will give a couple of output files. 
 
-### Explination of Metrics
+## Explination of Metrics
 
 - **Privacy** - This is a stat that is measured as the distance between the users location and the centriod (geometric center) of all
 the suggested locations per number of runs. This metric is useless unless you run it multiple times.
@@ -39,7 +39,7 @@ is the amount of times the program will run to grab a location.
 
 - **hybrid.py** - This implements the hybrid method. It calls the hybrid_day_in_life.txt file which consists of all the same inputs that would be needed for the poi.py and walkable.py. 
 
-### Output Files
+## Output Files
 
 #### POI Method (poi.py)
 - **POI_Map.html** - An interactive map showing user location, search radius around users location, and selected POIs
