@@ -71,10 +71,10 @@ def create_map(center_lat, center_lon, radius_km, walkable_areas):
             popup=f"{name}\n{tags}"
         ).add_to(Map)
 
-    Map.save("WalkableMapOverpass.html")
-    webbrowser.open('file://' + os.path.realpath("WalkableMapOverpass.html"))
+    Map.save("Walkable_Map.html")
+    webbrowser.open('file://' + os.path.realpath("Walkable_Map.html"))
 
-def save_to_file(points, filename="walkable_overpass.txt"):
+def save_to_file(points, filename="Walkable.txt"):
     with open(filename, "w", encoding="utf-8") as f:
         f.write("Walkable areas:\n\n")
         for name, lat, lon, tags, status in points:

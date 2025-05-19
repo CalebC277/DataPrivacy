@@ -121,15 +121,15 @@ def CreateMap(lat, lon, rad, pois, poi_counter, noise):
             ).add_to(Map)
             offset_points.append((offset_lat, offset_lon))               
 
-    Map.save("Map.html")
-    webbrowser.open('file://' + os.path.realpath("Map.html"))
+    Map.save("POI_Map.html")
+    webbrowser.open('file://' + os.path.realpath("POI_Map.html"))
 
-    with open("random_poi.txt", "w", encoding="utf-8") as file:
+    with open("POIs.txt", "w", encoding="utf-8") as file:
         file.write("Random POI's with noise: (lat, lon): \n")
         for offset_lat, offset_lon in offset_points:
             file.write(f"({offset_lat}, {offset_lon})\n")
 
-    with open("chosen_poi.txt", "w", encoding="utf-8") as file:
+    with open("Chosen_POIs.txt", "w", encoding="utf-8") as file:
         sorted_pois = sorted(poi_counter.items(), key=lambda x: x[1], reverse=True)
         for poi, count in sorted_pois:
             if count > 0:
