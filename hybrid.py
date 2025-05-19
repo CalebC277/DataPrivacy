@@ -181,8 +181,8 @@ def CreateMap(lat, lon, rad, locations, location_counter):
                 icon=folium.Icon(color=marker_color, icon='info-sign' if loc_type == 'poi' else 'road')
             ).add_to(Map)
     # saves the map as an html file that is opened in a browser
-    Map.save("Map.html")
-    webbrowser.open('file://' + os.path.realpath("Map.html"))
+    Map.save("hybrid_map.html")
+    webbrowser.open('file://' + os.path.realpath("hybrid_map.html"))
     
     return chosen_locations
 
@@ -207,6 +207,7 @@ def make_graph(csv_file):
     except Exception as e:
         print(f"Error creating graphs: {e}")
 
+# this reads a text file for location data needed
 def parse_config_file(filename):
     try:
         config = {}
@@ -222,6 +223,7 @@ def parse_config_file(filename):
             key = key.strip()
             value = value.strip()
             
+            # gets the longitude and latitude
             if key == 'location_type':
                 config[key] = value.lower()
             elif key in ['latitude', 'longitude', 'radius', 'noise']:
@@ -232,6 +234,7 @@ def parse_config_file(filename):
                 config[key] = int(value)
                 
         return config
+    # if the file was not read returns error
     except Exception as e:
         print(f"Error parsing config file: {e}")
         return None
@@ -239,12 +242,11 @@ def parse_config_file(filename):
 def Main():
     # read the day in the life file
     config = parse_config_file("hybrid_day_in_life.txt")
-    
     if not config:
         print("Failed to read file.")
         return
         
-    # Get location coordinates
+    # gets the location data 
     if 'location_type' in config and config['location_type'] == 'address':
         if 'address' not in config:
             print("Address not specified in config file.")
@@ -260,15 +262,16 @@ def Main():
         print("Invalid location information in config file.")
         return
         
-    # Get other parameters
+    # gets the radius for how far to find a location from user
     radius = config.get('radius', 1.0)
+    # gets the num of times this would be ran for that one location
     num_runs = config.get('num_runs', 10)
     
     print(f"Using coordinates: {coords}")
     print(f"Radius: {radius} km")
     print(f"Number of runs: {num_runs}")
     
-    # Find POIs and walkable areas
+    # finds all the pois and walkable locations in the radius
     pois = FindPOIs(coords[0], coords[1], radius)
     walkable_areas = FindWalkableAreas(coords[0], coords[1], radius)
     
@@ -277,19 +280,19 @@ def Main():
     locations_to_use = []
     location_keys = []
     
-    # First try to use POIs if there are at least 20 of them
+    # when there are not atleast 20 pois then it picks pois
     if len(pois) >= 20:
         print("Using only POIs since there at at least 20 in area!")
         locations_to_use = pois
     else:
-        # If not enough POIs, combine POIs with walkable areas
+        # if there arent 20 pois it picks between pois and walkable locations
         print(f"Only {len(pois)} POIs found. Adding walkable areas.")
         locations_to_use = pois + walkable_areas
         
-        # If still not enough locations, use what we have but print a warning
+        # when there are not enough walkable locations or pois in the radius
         if len(locations_to_use) < 5:
             print(f"Not enough locations to use")
-    
+    # cant be used if no locations other than the users to pick from
     if not locations_to_use:
         print("No locations found within the specified radius.")
         return
@@ -301,35 +304,32 @@ def Main():
         location_keys.append(key)
         location_dict[key] = loc
     
-    # Create a file to record per-run privacy and utility metrics
+    # creates a file to store the data of each location found and privacy and utility
     with open("hybrid_data.csv", "w", encoding="utf-8") as metrics_file:
         metrics_file.write("Run,Location,Utility(km),Privacy(km)\n")
         
-        # Initialize empty list for chosen locations
+        # creates empty list of locations picked
         chosen_locations = []
         location_counter = defaultdict(int)
         
-        # Run the simulation
+        # runs for the number of times they want a location
         for run in range(1, num_runs + 1):
-            # Select a random location
+            # picks random location
             chosen_key = random.choice(location_keys)
             chosen_location = location_dict[chosen_key]
             location_counter[chosen_key] += 1
             
-            # Add to list of chosen locations
+            # adds chosen location to lists
             chosen_locations.append(chosen_location)
             
-            # Calculate utility (average distance from centroid to locations)
+            #  calculates utility and privacy
             utility = calculate_utility_distance(
                 coords[0], coords[1], chosen_locations
             )
-            
-            # Calculate privacy (distance from user to centroid)
             privacy = calculate_privacy_distance(
                 coords[0], coords[1], chosen_locations
             )
-            
-            # Write metrics to file for this run
+            # writes the utility and privacy to file after each new location
             metrics_file.write(
                 f'{run},"{chosen_key}",{utility:.4f},{privacy:.4f}\n'
             )
@@ -341,7 +341,7 @@ def Main():
     # creates a map of the each suggested location 
     CreateMap(coords[0], coords[1], radius, locations_to_use, location_counter)
 
-    # creates a 
+    # creates a graph of the privacy vs utility
     make_graph("hybrid_data.csv")
     
     # calculates the utility and privacy scores based on chosen locations
