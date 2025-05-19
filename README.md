@@ -24,7 +24,7 @@ the suggested locations per number of runs. This metric is useless unless you ru
 There's an inherent tradeoff between privacy and utility. As the privacy increases (distance farther from user), then the utility
 will typically decrease (longer walking). It is in the users hands for figuring out their sweet spot for the utility vs privacy.
 
-### Python Files
+## Python Files
 
 - **poi.py** - This implements the Point of Interests method. 
 - **walkable.py** - This implements the walkable locations methods
