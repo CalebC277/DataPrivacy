@@ -32,6 +32,27 @@ is the amount of times the program will run to grab a location.
 
 ### Output Files
 
+#### POI Method (poi.py)
+- **POI_Map.html** - An interactive map showing your location, search radius, and the selected POIs with random noise applied
+- **POI_Utility_Privacy_Graph.png** - A graph showing how privacy and utility metrics change over the number of runs
+- **POIs.txt** - A list of all randomly generated POI locations with noise applied
+- **Chosen_POIs.txt** - A list of all selected POIs, sorted by how frequently they were chosen
+
+#### Walkable Method (walkable.py)
+- **Walkable_Map.html** - An interactive map showing your location, search radius, and selected walkable areas
+- **Walkable_Utility_Privacy_Graph.png** - A graph showing privacy and utility metrics over multiple iterations
+- **Walkable.txt** - A list of all selected walkable areas with their coordinates
+
+#### Hybrid Method (hybrid.py)
+- **Map.html** - An interactive map showing your location, search radius, and selected locations (both POIs and walkable areas if applicable)
+- **combined_metrics.png** - A graph showing privacy and utility metrics over multiple runs
+- **privacy_utility_metrics.csv** - Raw data for each run with columns for Run, Location, Utility(km), and Privacy(km)
+- **suggested_locations.txt** - Final metrics and a list of suggested locations with visit counts
+
+#### Comparison (compare.py)
+- **Privacy_Utility_Tradeoff.png** - A scatter plot comparing the privacy-utility tradeoff between POI and OSRM (walkable) methods across different locations
+- Console output showing detailed privacy and utility metrics for each location and method
+
 ## Installation and Setup
 
 ### Setup
