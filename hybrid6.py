@@ -9,6 +9,8 @@ import random
 from collections import defaultdict
 import warnings
 import math
+import matplotlib.pyplot as plt
+import pandas as pd
 
 OVERPASS_URL = "http://overpass-api.de/api/interpreter"
 os.environ["OMP_NUM_THREADS"] = "1"
@@ -124,6 +126,11 @@ def calculate_utility_distance(user_lat, user_lon, chosen_locations):
     if not chosen_locations:
         return 0
     
+    # Special case for the first location: use distance from user to location
+    if len(chosen_locations) == 1:
+        loc = chosen_locations[0]
+        return calculate_distance(user_lat, user_lon, float(loc[1]), float(loc[2]))
+    
     # Calculate centroid of chosen locations
     centroid_lat, centroid_lon = calculate_centroid(chosen_locations)
     
@@ -170,6 +177,57 @@ def CreateMap(lat, lon, rad, locations, location_counter):
     webbrowser.open('file://' + os.path.realpath("Map.html"))
     
     return chosen_locations
+
+def create_metrics_graphs(csv_file):
+    """
+    Create line graphs for privacy and utility metrics from the CSV data
+    """
+    try:
+        # Read the CSV file
+        df = pd.read_csv(csv_file)
+        
+        # Create a figure with two subplots
+        fig, (ax1, ax2) = plt.subplots(2, 1, figsize=(10, 12))
+        
+        # Plot Privacy metric
+        ax1.plot(df['Run'], df['Privacy(km)'], marker='o', linestyle='-', color='blue')
+        ax1.set_title('Privacy Distance Over Runs', fontsize=14)
+        ax1.set_xlabel('Run Number', fontsize=12)
+        ax1.set_ylabel('Privacy Distance (km)', fontsize=12)
+        ax1.grid(True, linestyle='--', alpha=0.7)
+        
+        # Plot Utility metric
+        ax2.plot(df['Run'], df['Utility(km)'], marker='s', linestyle='-', color='green')
+        ax2.set_title('Utility Distance Over Runs', fontsize=14)
+        ax2.set_xlabel('Run Number', fontsize=12)
+        ax2.set_ylabel('Utility Distance (km)', fontsize=12)
+        ax2.grid(True, linestyle='--', alpha=0.7)
+        
+        # Adjust layout
+        plt.tight_layout()
+        
+        # Save the figure
+        plt.savefig('privacy_utility_metrics.png', dpi=300)
+        plt.close()
+        
+        # Create a combined graph that shows both metrics
+        plt.figure(figsize=(10, 6))
+        plt.plot(df['Run'], df['Privacy(km)'], marker='o', linestyle='-', color='blue', label='Privacy')
+        plt.plot(df['Run'], df['Utility(km)'], marker='s', linestyle='-', color='green', label='Utility')
+        plt.title('Privacy and Utility Metrics Over Runs', fontsize=14)
+        plt.xlabel('Run Number', fontsize=12)
+        plt.ylabel('Distance (km)', fontsize=12)
+        plt.grid(True, linestyle='--', alpha=0.7)
+        plt.legend()
+        
+        # Save the combined figure
+        plt.savefig('combined_metrics.png', dpi=300)
+        plt.close()
+        
+        print("Created graphs: privacy_utility_metrics.png and combined_metrics.png")
+        
+    except Exception as e:
+        print(f"Error creating graphs: {e}")
 
 def parse_config_file(filename):
     try:
@@ -305,6 +363,8 @@ def Main():
     
     # Create the map with the user location and suggested locations
     CreateMap(coords[0], coords[1], radius, locations_to_use, location_counter)
+
+    create_metrics_graphs("privacy_utility_metrics.csv")
     
     # Calculate final metrics for all chosen locations
     final_utility = calculate_utility_distance(coords[0], coords[1], chosen_locations)
