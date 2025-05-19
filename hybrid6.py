@@ -325,7 +325,7 @@ def Main():
     print("Output files:")
     print("Map.html: This is an interactive map with the spots of users location and suggested locations")
     print("suggested_locations.txt: Provides final metrics and suggested locations")
-    print("privacy_utility_metrics.csv - Shows")
+    print("privacy_utility_metrics.csv: A CSV file of every run with location, priavcy, utility")
 
 if __name__ == "__main__":
     Main()
