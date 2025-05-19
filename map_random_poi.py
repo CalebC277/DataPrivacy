@@ -8,6 +8,8 @@ import re
 import random
 from collections import defaultdict
 import warnings
+import numpy as np
+import matplotlib.pyplot as plt
 
 OVERPASS_URL = "http://overpass-api.de/api/interpreter"
 os.environ["OMP_NUM_THREADS"] = "1"
@@ -138,6 +140,22 @@ def CreateMap(lat, lon, rad, pois, poi_counter, noise):
             if count > 0:
                 file.write(f"{poi} -> chosen {count} times\n")
 
+def CalculateDistance(lat1, lon1, lat2, lon2):
+    R = 6371.0
+    lat1_rad = np.radians(lat1)
+    lon1_rad = np.radians(lon1)
+    lat2_rad = np.radians(lat2)
+    lon2_rad = np.radians(lon2)
+
+    dlon = lon2_rad - lon1_rad
+    dlat = lat2_rad - lat1_rad
+
+    a = np.sin(dlat / 2) ** 2 + np.cos(lat1_rad) * np.cos(lat2_rad) * np.sin(dlon / 2) ** 2
+    c = 2 * np.arctan2(np.sqrt(a), np.sqrt(1 - a))
+
+    distance = R * c
+    return distance    
+
 def Main():
     ch = input("Type 'Address' or 'Coordinates': ").strip().lower()
 
@@ -183,12 +201,56 @@ def Main():
         return
 
     poi_counter = defaultdict(int)
-    #for x in range(1000):
+    utility_values = []
+    privacy_values = []
+
     for x in range(num_runs):
         chosen = random.choice(pois)
         poi_counter[chosen] += 1
 
+        utility = 0.0
+        privacy = 0.0
+
+        for poi, count in poi_counter.items():
+            name, latStr, lonStr = ParsePOI(poi)
+            latF = float(latStr)
+            lonF = float(lonStr)
+            dist = CalculateDistance(coords[0], coords[1], latF, lonF)
+            utility += dist / len(poi_counter)
+        
+        centroid_lat = sum(float(ParsePOI(poi)[1]) for poi in poi_counter) / len(poi_counter)
+        centroid_lon = sum(float(ParsePOI(poi)[2]) for poi in poi_counter) / len(poi_counter)
+        privacy = CalculateDistance(coords[0], coords[1], centroid_lat, centroid_lon)
+
+        utility_values.append(utility)
+        privacy_values.append(privacy)
+
+        print(f"Iteration {x + 1}")
+        print(f"Privacy = {privacy}")
+        print(f"Utility = {utility}")
+        print("")
+
+
+
     CreateMap(coords[0], coords[1], radius, pois, poi_counter, noise)
+
+    plt.figure(figsize=(12, 5))
+
+    plt.subplot(1, 2, 1)
+    plt.plot(range(1, num_runs + 1), utility_values, marker='o', color='green')
+    plt.title('Utility vs Iteration')
+    plt.xlabel('Iteration')
+    plt.ylabel('Utility (Avg Distance to Chosen POIs)')
+
+    plt.subplot(1, 2, 2)
+    plt.plot(range(1, num_runs + 1), privacy_values, marker='o', color='red')
+    plt.title('Privacy vs Iteration')
+    plt.xlabel('Iteration')
+    plt.ylabel('Privacy (Distance to Centroid of POIs)')
+
+    plt.tight_layout()
+    plt.savefig("POI_Utility_Privacy_Graph")
+    plt.show()
 
 if __name__ == "__main__":
     Main()
