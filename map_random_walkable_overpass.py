@@ -75,7 +75,7 @@ def save_to_file(points, filename="walkable_overpass.txt"):
     with open(filename, "w", encoding="utf-8") as f:
         f.write("Walkable areas:\n\n")
         for name, lat, lon, tags, status in points:
-            f.write(f"{name}: ({lat}, {lon}) [{tags}]\n")
+            f.write(f"{name}: ({lat}, {lon})\n")
 
 def main():
     ch = input("Type 'Address' or 'Coordinates': ").strip().lower()

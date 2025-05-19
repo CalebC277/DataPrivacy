@@ -263,7 +263,7 @@ def Main():
     config = parse_config_file("day_in_a_life2.txt")
     
     if not config:
-        print("Failed to read configuration file. Make sure day_in_a_life2.txt exists and is properly formatted.")
+        print("Failed to read day_in_life2.txt file.")
         return
         
     # Get location coordinates
