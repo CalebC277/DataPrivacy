@@ -112,7 +112,9 @@ POIs to Walkable run the compare.py program. Testing the hybrid we suggest just 
 ## Authors
 
 @CalebC277 - ccallah2@umbc.edu - Caleb Callahan
+
 @ctdeboy - cdeboy3@umbc.edu - Christopher DeBoy
+
 @ScottGersten - sgerste1@umbc.edu - Scott Gersten
  
 
