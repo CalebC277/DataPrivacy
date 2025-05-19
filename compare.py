@@ -7,15 +7,17 @@ from geopy.distance import geodesic
 import statistics
 import matplotlib.pyplot as plt
 
-
+# Generate coordinates from an address
 def get_coordinates(address):
     geolocator = Nominatim(user_agent="geoapi")
     location = geolocator.geocode(address)
     return (location.latitude, location.longitude) if location else (None, None)
 
+# Get coordinates from a file
 def extract_coords_from_file(filepath):
     coords = []
     with open(filepath, 'r', encoding='utf-8') as file:
+        # Use regex to match a line in the file to a coordinate
         for line in file:
             match = re.search(r"\(([-\d.]+), ([-\d.]+)\)", line)
             if match:
@@ -24,12 +26,14 @@ def extract_coords_from_file(filepath):
                 coords.append((lat, lon))
     return coords
 
+# Find the average distance between two coordinates
 def average_distance(from_coord, to_coords):
     if not to_coords:
         return float('inf')
     total = sum(geodesic(from_coord, point).km for point in to_coords)
     return total / len(to_coords)
 
+# Determine the centroid from a list of coordinates
 def centroid(coords):
     if not coords:
         return (None, None)
@@ -38,18 +42,19 @@ def centroid(coords):
     return (lat, lon)
 
 
-def run_program(command):
-    subprocess.run(command, shell=True)
+# def run_program(command):
+#     subprocess.run(command, shell=True)
 
 def main():
+    # Use the text file as input
     with open("day_in_a_life.txt", "r", encoding="utf-8") as file:
         lines = [line.strip() for line in file if line.strip()]
 
     results = []
 
     num_runs = lines[0]
-    #print(f"{num_runs}")
     for i in range(1, len(lines), 2):
+        # Parse the text file for the required input
         address = lines[i]
         radius = float(lines[i + 1])
         coords = get_coordinates(address)
@@ -60,7 +65,7 @@ def main():
 
         print(f"\nProcessing location: {address} (radius {radius} km)")
 
-        # === map_random_poi.py ===
+        # Run the poi.py method using the input from text file
         print("Running POI-based method...")
         proc = subprocess.Popen(
             f'python poi.py',
@@ -72,14 +77,15 @@ def main():
         proc.communicate(input=f"address\n{address}\n{radius}\n0.002\n{num_runs}\n")
         time.sleep(2)
 
+        # Determine the privacy and utility for a single location for POI method
         poi_coords = extract_coords_from_file("POIs.txt")
         utility_poi = average_distance(coords, poi_coords)
         centroid_poi = centroid(poi_coords)
         privacy_poi = geodesic(coords, centroid_poi).km if centroid_poi[0] is not None else float('inf')
         results.append((address, "POI", utility_poi, privacy_poi)) 
 
-        # === map_random_walkable_osrm.py ===
-        print("Running OSRM walkable method...")
+        # Run the walkable.py method using input from text file
+        print("Running Walkable method...")
         proc = subprocess.Popen(
             f'python walkable.py',
             stdin=subprocess.PIPE,
@@ -90,17 +96,20 @@ def main():
         proc.communicate(input=f"address\n{address}\n{radius}\n{num_runs}\n")
         time.sleep(2)
 
+        # Determine the privacy and utility for a single location for walkable method
         walkable_coords = extract_coords_from_file("Walkable.txt")
         utility_osrm = average_distance(coords, walkable_coords)
         centroid_osrm = centroid(walkable_coords)
         privacy_osrm = geodesic(coords, centroid_osrm).km if centroid_osrm[0] is not None else float('inf')
-        results.append((address, "OSRM", utility_osrm, privacy_osrm)) 
+        results.append((address, "Walkable", utility_osrm, privacy_osrm)) 
 
     # Print summary
     total_utility_poi = []
     total_privacy_poi = []
     total_utility_osrm = []
     total_privacy_osrm = []
+
+    # Show privacy/utility tradeoff for each location, for each method
     print("\n==== Privacy vs Utility Summary ====")
     for address, method, utility, privacy in results:
         print(f"Address: {address}")
@@ -111,31 +120,18 @@ def main():
         if method == "POI":
             total_utility_poi.append(utility)
             total_privacy_poi.append(privacy)
-        if method == "OSRM":
+        if method == "Walkable":
             total_utility_osrm.append(utility)
             total_privacy_osrm.append(privacy)
 
+    # Show average privacy/utility tradeoff for each method
     print(f"Average Utility for POI: {statistics.mean(total_utility_poi):.4f} km")
     print(f"Average Privacy for POI: {statistics.mean(total_privacy_poi):.4f} km")
-    print(f"Average Utility for OSRM: {statistics.mean(total_utility_osrm):.4f} km")
-    print(f"Average Privacy for OSRM: {statistics.mean(total_privacy_osrm):.4f} km")
+    print(f"Average Utility for Walkable: {statistics.mean(total_utility_osrm):.4f} km")
+    print(f"Average Privacy for Walkable: {statistics.mean(total_privacy_osrm):.4f} km")
 
-    # plt.figure(figsize=(10, 6))
-    # plt.scatter(total_privacy_poi, total_utility_poi, color='blue', label='POI', marker='o')
-    # plt.scatter(total_privacy_osrm, total_utility_osrm, color='green', label='OSRM', marker='^')
-
-    # plt.xlabel("Privacy (Distance from centroid to true location) [km]")
-    # plt.ylabel("Utility (Avg distance from true location) [km]")
-    # plt.title("Privacy vs Utility Tradeoff")
-    # plt.legend()
-    # plt.grid(True)
-    # plt.tight_layout()
-    # plt.savefig("privacy_utility_tradeoff.png")
-    # plt.show()
-
-        # === Plotting the Privacy vs Utility Tradeoff ===
+    # Create a summary plot of privacy/utility tradeoff for each location, for each method
     plt.figure(figsize=(12, 7))
-
     for address, method, utility, privacy in results:
         color = 'blue' if method == "POI" else 'green'
         marker = 'o' if method == "POI" else '^'
@@ -151,7 +147,6 @@ def main():
             fontsize=8,
             alpha=0.7
         )
-
     plt.xlabel("Privacy (Distance from centroid to true location) [km]")
     plt.ylabel("Utility (Avg distance from true location) [km]")
     plt.title("Privacy vs Utility Tradeoff")

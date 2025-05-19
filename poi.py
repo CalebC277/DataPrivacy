@@ -11,7 +11,7 @@ import warnings
 import numpy as np
 import matplotlib.pyplot as plt
 
-# Using the overpass API for mapping
+# Using the Overpass API for mapping
 OVERPASS_URL = "http://overpass-api.de/api/interpreter"
 os.environ["OMP_NUM_THREADS"] = "1"
 warnings.filterwarnings(
