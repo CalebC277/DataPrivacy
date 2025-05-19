@@ -200,13 +200,14 @@ def Main():
         print("Invalid Noise Value")
         return
     
-    
+    # From the user get the number of runs
     try:
         num_runs = int(input("Enter number of runs: "))
     except ValueError:
         print("Invalid number of runs")
         return
 
+    # Find all POIs within the given radius
     pois = FindPOIs(coords[0], coords[1], radius)
     if not pois:
         print("No POIs found.")
@@ -216,6 +217,7 @@ def Main():
     utility_values = []
     privacy_values = []
 
+    # For each iteration, calculate the privacy and utility values and save them
     for x in range(num_runs):
         chosen = random.choice(pois)
         poi_counter[chosen] += 1
@@ -223,6 +225,7 @@ def Main():
         utility = 0.0
         privacy = 0.0
 
+        # Utility is average distance from all current POIs in the iteration to the chosen location
         for poi, count in poi_counter.items():
             name, latStr, lonStr = ParsePOI(poi)
             latF = float(latStr)
@@ -230,6 +233,7 @@ def Main():
             dist = CalculateDistance(coords[0], coords[1], latF, lonF)
             utility += dist / len(poi_counter)
         
+        # Privacy is the distance from the centroid of all current POIs in the iteration to the chosen location
         centroid_lat = sum(float(ParsePOI(poi)[1]) for poi in poi_counter) / len(poi_counter)
         centroid_lon = sum(float(ParsePOI(poi)[2]) for poi in poi_counter) / len(poi_counter)
         privacy = CalculateDistance(coords[0], coords[1], centroid_lat, centroid_lon)
@@ -242,10 +246,10 @@ def Main():
         print(f"Utility = {utility}")
         print("")
 
-
-
+    # Create the map
     CreateMap(coords[0], coords[1], radius, pois, poi_counter, noise)
 
+    # Plot the privacy and utility vs iteration
     plt.figure(figsize=(12, 5))
 
     plt.subplot(1, 2, 1)
