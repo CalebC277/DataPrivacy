@@ -30,7 +30,9 @@ def GetCoordinates(address):
     else:
         return None
 
+# Queiries OpenStreetMaps Overpass API to find POIs
 def FindPOIs(lat, lon, rad):
+    # finds amentities, tourism, leisure, and shop tags 
     query = f"""
     [out:json];
     (
@@ -51,6 +53,7 @@ def FindPOIs(lat, lon, rad):
     );
     out center tags;
     """
+    # puts the pois found into a lists
     response = requests.get(OVERPASS_URL, params={'data': query})
     data = response.json()
     pois = []
@@ -68,8 +71,10 @@ def FindPOIs(lat, lon, rad):
         if lat is not None and lon is not None and name != 'Unnamed POI':
             pois.append((name, lat, lon, "poi"))
 
+    # returns the lists of pois
     return pois
 
+# querires OpenStreetMaps for walkable areas along a road or trail
 def FindWalkableAreas(lat, lon, rad):
     query = f"""
     [out:json];
@@ -81,6 +86,7 @@ def FindWalkableAreas(lat, lon, rad):
     """
     response = requests.get(OVERPASS_URL, params={'data': query})
     data = response.json()
+    # puts the walkable locations into a list with longitude and latitude
     walkable_areas = []
     for el in data['elements']:
         center = el.get('center')
@@ -91,10 +97,13 @@ def FindWalkableAreas(lat, lon, rad):
                 highway_type = el['tags'].get('highway', 'unknown')
                 name = el['tags'].get('name', f"Walkable Area ({highway_type})")
                 walkable_areas.append((name, lat_center, lon_center, "walkable"))
+    # returns all the walkable locations
     return walkable_areas
 
+# calculates the distance between to points using longitude and latitude
 def calculate_distance(lat1, lon1, lat2, lon2):
-    R = 6371  # Radius of the Earth in km
+    # uses the Haversine formula
+    R = 6371  # radius of earth
     dLat = math.radians(lat2 - lat1)
     dLon = math.radians(lon2 - lon1)
     a = math.sin(dLat/2) * math.sin(dLat/2) + \
@@ -104,6 +113,7 @@ def calculate_distance(lat1, lon1, lat2, lon2):
     distance = R * c
     return distance
 
+# calculates a center location of a set of locations
 def calculate_centroid(locations):
     if not locations:
         return (0, 0)
@@ -112,40 +122,40 @@ def calculate_centroid(locations):
     centroid_lon = sum(float(loc[2]) for loc in locations) / len(locations)
     return (centroid_lat, centroid_lon)
 
+# calculates the distance between a user's location and the centriod of chosen locations
+# higher the number is than the more privacy
 def calculate_privacy_distance(user_lat, user_lon, chosen_locations):
     if not chosen_locations:
         return 0
-    
-    # Calculate centroid of chosen locations
+    # calculate the centriod longitude and latitude
     centroid_lat, centroid_lon = calculate_centroid(chosen_locations)
-    
-    # Calculate distance between user location and centroid
+    # calculate distance between user and centriod
     privacy_distance = calculate_distance(user_lat, user_lon, centroid_lat, centroid_lon)
     return privacy_distance
 
+# calculates the distance that the user would have to walk to pickup/dropoff location
+# lower number is more ideal for user but also lowers the privacy
 def calculate_utility_distance(user_lat, user_lon, chosen_locations):
     if not chosen_locations:
         return 0
-    
-    # Special case for the first location: use distance from user to location
+    # calculates the first distance
     if len(chosen_locations) == 1:
         loc = chosen_locations[0]
         return calculate_distance(user_lat, user_lon, float(loc[1]), float(loc[2]))
-    
-    # Calculate centroid of chosen locations
+    # calculate the centriod longitude and latitude
     centroid_lat, centroid_lon = calculate_centroid(chosen_locations)
-    
-    # Calculate average distance from centroid to all chosen locations
+    # calculate distance between user and centriod
     distances = [calculate_distance(centroid_lat, centroid_lon, float(loc[1]), float(loc[2])) 
                  for loc in chosen_locations]
-    
     utility_distance = sum(distances) / len(distances) if distances else 0
     return utility_distance
 
+# this creates an interactive map showing users location and chosen locations, and radius
 def CreateMap(lat, lon, rad, locations, location_counter):
     Map = folium.Map(location=[lat, lon], zoom_start=13)
+    # sets the users location
     folium.Marker([lat, lon], popup="User Location", icon=folium.Icon(color='red')).add_to(Map)
-
+    # this creates the radius around the users location
     Circle(
         location=(lat, lon),
         radius=rad * 1000,
@@ -153,51 +163,47 @@ def CreateMap(lat, lon, rad, locations, location_counter):
         fill=True,
         fill_opacity=0.3
     ).add_to(Map)
-
-    # Track chosen locations
     chosen_locations = []
-    
-    # Create map markers ONLY for chosen locations
+    # creates the map markers for chosen locations
     for location in locations:
         name, lat_loc, lon_loc, loc_type = location
         location_key = f"{name} ({lat_loc}, {lon_loc})"
         count = location_counter.get(location_key, 0)
         
         if count > 0:
+            # sets the chosen locations colors 
             chosen_locations.append(location)
             marker_color = 'green' if loc_type == 'poi' else 'orange'
-            
-            # Add only the chosen locations
+            # adds the chosen locations to the map
             folium.Marker(
                 location=[float(lat_loc), float(lon_loc)],
                 popup=f"{name}<br>Visits: {count}",
                 icon=folium.Icon(color=marker_color, icon='info-sign' if loc_type == 'poi' else 'road')
             ).add_to(Map)
-
+    # saves the map as an html file that is opened in a browser
     Map.save("Map.html")
     webbrowser.open('file://' + os.path.realpath("Map.html"))
     
     return chosen_locations
 
+# this creates a graph from the cvs data showing the privacy vs. utility over multiple runs
 def make_graph(csv_file):
     try:
-        # Read the CSV file
+        # 
         df = pd.read_csv(csv_file)
-        
-        # Create a combined graph that shows both metrics
+        # creates the graph with the privacy and utility
         plt.figure(figsize=(10, 6))
         plt.plot(df['Run'], df['Privacy(km)'], marker='o', linestyle='-', color='blue', label='Privacy')
         plt.plot(df['Run'], df['Utility(km)'], marker='s', linestyle='-', color='green', label='Utility')
-        plt.title('Privacy and Utility Metrics Over Runs', fontsize=14)
-        plt.xlabel('Run Number', fontsize=12)
+        plt.title('Privacy and Utility Metrics Over Multiple Runs', fontsize=14)
+        plt.xlabel('Number of Locations Chosen', fontsize=12)
         plt.ylabel('Distance (km)', fontsize=12)
         plt.grid(True, linestyle='--', alpha=0.7)
         plt.legend()
-        
-        # Save the combined figure
+        # saves the graph a png file
         plt.savefig('hybrid_graph.png', dpi=300)
         plt.close()
-    
+    # if the graph was not created then it returns an error
     except Exception as e:
         print(f"Error creating graphs: {e}")
 
@@ -231,7 +237,7 @@ def parse_config_file(filename):
         return None
 
 def Main():
-    # Read configuration from file
+    # read the day in the life file
     config = parse_config_file("hybrid_day_in_life.txt")
     
     if not config:
