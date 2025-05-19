@@ -62,8 +62,7 @@ def FindPOIs(lat, lon, rad):
                 lon = center.get('lon')
 
         if lat is not None and lon is not None and name != 'Unnamed POI':
-            category = ', '.join([f"{k}={v}" for k, v in el.get('tags', {}).items() if k != 'name'])
-            pois.append((name, lat, lon, category, "poi"))
+            pois.append((name, lat, lon, "poi"))
 
     return pois
 
@@ -87,7 +86,7 @@ def FindWalkableAreas(lat, lon, rad):
             if lat_center and lon_center:
                 highway_type = el['tags'].get('highway', 'unknown')
                 name = el['tags'].get('name', f"Walkable Area ({highway_type})")
-                walkable_areas.append((name, lat_center, lon_center, f"highway={highway_type}", "walkable"))
+                walkable_areas.append((name, lat_center, lon_center, "walkable"))
     return walkable_areas
 
 def calculate_distance(lat1, lon1, lat2, lon2):
@@ -102,25 +101,38 @@ def calculate_distance(lat1, lon1, lat2, lon2):
     distance = R * c
     return distance
 
-def calculate_average_distance(user_lat, user_lon, locations):
+def calculate_centroid(locations):
     if not locations:
-        return 0
+        return (0, 0)
     
-    distances = [calculate_distance(user_lat, user_lon, float(loc[1]), float(loc[2])) for loc in locations]
-    avg_distance = sum(distances) / len(distances)
-    return avg_distance
+    centroid_lat = sum(float(loc[1]) for loc in locations) / len(locations)
+    centroid_lon = sum(float(loc[2]) for loc in locations) / len(locations)
+    return (centroid_lat, centroid_lon)
 
 def calculate_privacy_distance(user_lat, user_lon, chosen_locations):
     if not chosen_locations:
         return 0
     
     # Calculate centroid of chosen locations
-    centroid_lat = sum(float(loc[1]) for loc in chosen_locations) / len(chosen_locations)
-    centroid_lon = sum(float(loc[2]) for loc in chosen_locations) / len(chosen_locations)
+    centroid_lat, centroid_lon = calculate_centroid(chosen_locations)
     
     # Calculate distance between user location and centroid
     privacy_distance = calculate_distance(user_lat, user_lon, centroid_lat, centroid_lon)
     return privacy_distance
+
+def calculate_utility_distance(user_lat, user_lon, chosen_locations):
+    if not chosen_locations:
+        return 0
+    
+    # Calculate centroid of chosen locations
+    centroid_lat, centroid_lon = calculate_centroid(chosen_locations)
+    
+    # Calculate average distance from centroid to all chosen locations
+    distances = [calculate_distance(centroid_lat, centroid_lon, float(loc[1]), float(loc[2])) 
+                 for loc in chosen_locations]
+    
+    utility_distance = sum(distances) / len(distances) if distances else 0
+    return utility_distance
 
 def CreateMap(lat, lon, rad, locations, location_counter):
     Map = folium.Map(location=[lat, lon], zoom_start=13)
@@ -139,8 +151,8 @@ def CreateMap(lat, lon, rad, locations, location_counter):
     
     # Create map markers ONLY for chosen locations
     for location in locations:
-        name, lat_loc, lon_loc, category, loc_type = location
-        location_key = f"{name} at ({lat_loc}, {lon_loc}) [{category}]"
+        name, lat_loc, lon_loc, loc_type = location
+        location_key = f"{name} ({lat_loc}, {lon_loc})"
         count = location_counter.get(location_key, 0)
         
         if count > 0:
@@ -150,28 +162,14 @@ def CreateMap(lat, lon, rad, locations, location_counter):
             # Add only the chosen locations
             folium.Marker(
                 location=[float(lat_loc), float(lon_loc)],
-                popup=f"{name}<br>{category}<br>Visits: {count}",
+                popup=f"{name}<br>Visits: {count}",
                 icon=folium.Icon(color=marker_color, icon='info-sign' if loc_type == 'poi' else 'road')
             ).add_to(Map)
 
-    # Calculate distance metrics
-    avg_distance = calculate_average_distance(lat, lon, chosen_locations)
-    privacy_distance = calculate_privacy_distance(lat, lon, chosen_locations)
-
     Map.save("Map.html")
     webbrowser.open('file://' + os.path.realpath("Map.html"))
-
-    # Save results to file
-    with open("suggested_locations.txt", "w", encoding="utf-8") as file:
-        file.write("DISTANCE METRICS:\n")
-        file.write(f"Utility: {avg_distance:.2f} km\n")
-        file.write(f"Privacy: {privacy_distance:.2f} km\n\n")
-        
-        file.write("Suggested locations:\n")
-        for loc in chosen_locations:
-            loc_key = f"{loc[0]} at ({loc[1]}, {loc[2]}) [{loc[3]}]"
-            count = location_counter.get(loc_key, 0)
-            file.write(f"{loc_key} -> suggested {count} times\n")
+    
+    return chosen_locations
 
 def parse_config_file(filename):
     try:
@@ -244,8 +242,8 @@ def Main():
     locations_to_use = []
     location_keys = []
     
-    # First try to use POIs if there are at least 5 of them
-    if len(pois) >= 5:
+    # First try to use POIs if there are at least 20 of them
+    if len(pois) >= 20:
         print("Using POIs as there are at least 5 available.")
         locations_to_use = pois
     else:
@@ -261,22 +259,73 @@ def Main():
         print("No locations found within the specified radius.")
         return
     
-    # Create location keys for the counter
-    location_keys = [f"{loc[0]} at ({loc[1]}, {loc[2]}) [{loc[3]}]" for loc in locations_to_use]
+    # Create location keys for the counter and a dictionary to map keys back to locations
+    location_dict = {}
+    for loc in locations_to_use:
+        key = f"{loc[0]} ({loc[1]}, {loc[2]})"
+        location_keys.append(key)
+        location_dict[key] = loc
     
-    # Run the simulation
-    location_counter = defaultdict(int)
-    for _ in range(num_runs):
-        chosen = random.choice(location_keys)
-        location_counter[chosen] += 1
+    # Create a file to record per-run privacy and utility metrics
+    with open("privacy_utility_metrics.csv", "w", encoding="utf-8") as metrics_file:
+        metrics_file.write("Run,Location,Utility(km),Privacy(km)\n")
+        
+        # Initialize empty list for chosen locations
+        chosen_locations = []
+        location_counter = defaultdict(int)
+        
+        # Run the simulation
+        for run in range(1, num_runs + 1):
+            # Select a random location
+            chosen_key = random.choice(location_keys)
+            chosen_location = location_dict[chosen_key]
+            location_counter[chosen_key] += 1
+            
+            # Add to list of chosen locations
+            chosen_locations.append(chosen_location)
+            
+            # Calculate utility (average distance from centroid to locations)
+            utility = calculate_utility_distance(
+                coords[0], coords[1], chosen_locations
+            )
+            
+            # Calculate privacy (distance from user to centroid)
+            privacy = calculate_privacy_distance(
+                coords[0], coords[1], chosen_locations
+            )
+            
+            # Write metrics to file for this run
+            metrics_file.write(
+                f'{run},"{chosen_key}",{utility:.4f},{privacy:.4f}\n'
+            )
+            
+            print(f"Run {run}: Selected {chosen_location[0]}")
+            print(f"  - Utility: {utility:.4f} km")
+            print(f"  - Privacy: {privacy:.4f} km")
     
-    # Create the map with ONLY the user location and suggested locations
+    # Create the map with the user location and suggested locations
     CreateMap(coords[0], coords[1], radius, locations_to_use, location_counter)
     
-    print("\nDone! Map and results files have been created.")
+    # Calculate final metrics for all chosen locations
+    final_utility = calculate_utility_distance(coords[0], coords[1], chosen_locations)
+    final_privacy = calculate_privacy_distance(coords[0], coords[1], chosen_locations)
+    
+    # Save aggregated results to file
+    with open("suggested_locations.txt", "w", encoding="utf-8") as file:
+        file.write("Final Utility and Privacy Metrics:\n")
+        file.write(f"Utility: {final_utility:.4f} km\n")
+        file.write(f"Privacy: {final_privacy:.4f} km\n\n")
+        
+        file.write("Suggested locations:\n")
+        for loc_key, count in location_counter.items():
+            if count > 0:
+                file.write(f"{loc_key} -> suggested {count} times\n")
+    
+    print("\nMap and results files have been printed and created!.")
     print("Output files:")
-    print("Map.html: Interactive map with user location and suggested locations")
-    print("suggested_locations.txt: List of suggested locations with distance metrics")
+    print("Map.html: This is an interactive map with the spots of users location and suggested locations")
+    print("suggested_locations.txt: Provides final metrics and suggested locations")
+    print("privacy_utility_metrics.csv - Shows")
 
 if __name__ == "__main__":
     Main()

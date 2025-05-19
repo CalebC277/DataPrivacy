@@ -1,26 +1,26 @@
 Run,Location,Utility(km),Privacy(km)
-1,Lot 1 at (39.2536141, -76.7081817) [access=private, amenity=parking, operator=University of Maryland Baltimore County, parking=surface],0.1515,0.1515
-2,The Commons at (39.2551512, -76.7113318) [amenity=food_court, check_date=2025-03-15, indoor_seating=yes, operator=UMBC, outdoor_seating=yes],0.3720,0.2344
-3,Lot 26 at (39.2531032, -76.7049025) [amenity=parking_space, capacity=2, parking_space=disabled],0.3551,0.1880
-4,Lot 23 at (39.2546518, -76.7057234) [amenity=parking_space, capacity=2, parking_space=disabled],0.3737,0.2284
-5,Lot 1 at (39.2536141, -76.7081817) [access=private, amenity=parking, operator=University of Maryland Baltimore County, parking=surface],0.1515,0.2129
-6,PNC Bank at (39.2545706, -76.7130695) [amenity=atm, check_date=2025-03-15, currency:USD=yes, drive_through=no, indoor=no, lit=yes, opening_hours=24/7, source=survey, wheelchair=yes],0.4327,0.1959
-7,Event Center at (39.2523107, -76.7087002) [amenity=parking_space, capacity=4, parking_space=disabled],0.0202,0.1673
-8,Lot 1 at (39.2533317, -76.7086432) [access=private, amenity=parking, operator=University of Maryland Baltimore County, parking=surface],0.1088,0.1600
-9,Lot 23 at (39.2548019, -76.705241) [amenity=parking, operator=University of Maryland Baltimore County, parking=surface],0.4159,0.1803
-10,Arbutus Middle School at (39.2491702, -76.7039754) [amenity=school, gnis:feature_id=594075, grades=6-8, isced:level=2, operator=Baltimore County Public Schools, operator:short=BCPS, operator:type=public, operator:wikidata=Q4852849],0.5552,0.1520
-11,Lot 12 at (39.2564565, -76.7066434) [amenity=parking_space, capacity=4, parking_space=disabled],0.4941,0.1818
-12,Loading Dock at (39.2564486, -76.7067561) [access=private, amenity=parking, parking=surface],0.4895,0.2066
-13,Einstein Bros. Bagels at (39.2563441, -76.7116592) [addr:city=Baltimore, addr:housenumber=1000, addr:postcode=21250, addr:state=MD, addr:street=Hilltop Circle, addr:unit=C, alt_name=Einstein Brothers Bagels, amenity=fast_food, branch=UMBC - AOK Library, brand=Einstein Bros. Bagels, brand:wikidata=Q5349788, cuisine=bagel, delivery=no, drive_through=no, opening_hours=Mo-Th 09:00-22:00; Fr 09:00-15:00; Sa 11:00-18:00; Su 13:00-19:00, takeaway=yes, website=https://locations.einsteinbros.com/us/md/baltimore/1000-hilltop-circle, wheelchair=yes],0.5003,0.2119
-14,Retriever Soccer Park at (39.2512886, -76.7051) [leisure=stadium, sport=soccer, wikipedia=en:Retriever Soccer Park],0.3503,0.2000
-15,Lot 4 at (39.2550256, -76.7084505) [amenity=parking_space, parking_space=disabled],0.2973,0.2050
-16,The Commons at (39.2551512, -76.7113318) [amenity=food_court, check_date=2025-03-15, indoor_seating=yes, operator=UMBC, outdoor_seating=yes],0.3720,0.2039
-17,Janet and Walter Sondheim Hall at (39.2532195, -76.7131024) [board_type=history, information=board, tourism=information],0.3723,0.1899
-18,Center Road at (39.2558614, -76.7094044) [amenity=parking_space, capacity=2, parking_space=disabled],0.3897,0.1995
-19,True Grit's Dining Hall at (39.2558863, -76.7077485) [amenity=restaurant],0.4030,0.2102
-20,Walter Sondheim Sculpture at (39.2536779, -76.7128769) [artist:wikidata=Q4777004, artist_name=Antonio Tobias Mendez, artwork_type=sculpture, material=metal, start_date=2005, tourism=artwork],0.3703,0.2034
-21,Starbucks at (39.2541842, -76.7130756) [addr:city=Baltimore, addr:housenumber=1000, addr:postcode=21250, addr:state=MD, addr:street=Hilltop Circle, amenity=cafe, branch=UMBC University Center, brand=Starbucks, brand:wikidata=Q37158, check_date=2025-03-15, cuisine=coffee_shop, indoor_seating=yes, official_name=Starbucks Coffee, opening_hours=Mo-Th 08:00-18:00; Fr 08:00-16:00; Sa off; Su 14:00-18:00, outdoor_seating=yes, phone=+1 443-612-8390, ref=18717, takeaway=yes, website=https://www.starbucks.com/store-locator/store/18717/umbc-university-center-1000-hilltop-circle-baltimore-md-212500001-us],0.4105,0.2013
-22,Lot 23 at (39.2546518, -76.7057234) [amenity=parking_space, capacity=2, parking_space=disabled],0.3737,0.2048
-23,The Quad at (39.2541495, -76.7117221) [leisure=park],0.3117,0.2035
-24,Stadium Lot at (39.2534051, -76.7062316) [access=private, amenity=parking, operator=University of Maryland Baltimore County, parking=surface],0.2580,0.2006
-25,Stadium Lot at (39.2534051, -76.7062316) [access=private, amenity=parking, operator=University of Maryland Baltimore County, parking=surface],0.2580,0.1983
+1,"Stadium Lot (39.2534051, -76.7062316)",0.0000,0.2580
+2,"University of Maryland Baltimore County (39.2524401, -76.7101084)",0.1753,0.0885
+3,"Event Center (39.2523107, -76.7087002)",0.1356,0.0622
+4,"Einstein Bros. Bagels (39.2563441, -76.7116592)",0.2328,0.1405
+5,"Administration Drive Garage (39.2519468, -76.7126739)",0.2431,0.1307
+6,"Center Road (39.25648, -76.7090995)",0.2678,0.1757
+7,"Lot 26 (39.2528446, -76.705164)",0.2804,0.1458
+8,"Stadium Lot (39.2535882, -76.7064676)",0.2701,0.1444
+9,"Dunkin' Donuts (39.254646, -76.7109146)",0.2648,0.1560
+10,"Double Helix (39.252828, -76.7137605)",0.2783,0.1531
+11,"Lot 24 (39.2542451, -76.7043064)",0.2918,0.1511
+12,"Lot 23 (39.2546518, -76.7057234)",0.2910,0.1602
+13,"Lot 4 (39.2550256, -76.7084505)",0.2788,0.1708
+14,"Lot 3 (39.2544791, -76.7071504)",0.2682,0.1765
+15,"Walter Sondheim Sculpture (39.2536779, -76.7128769)",0.2765,0.1724
+16,"Lot 11 (39.2561458, -76.7082348)",0.2737,0.1879
+17,"Stadium Lot (39.2533099, -76.7060089)",0.2712,0.1840
+18,"True Grit Statue (39.2530398, -76.7131576)",0.2800,0.1768
+19,"Lot 23 (39.2548019, -76.705241)",0.2805,0.1824
+20,"Lot 4 (39.2550256, -76.7084505)",0.2717,0.1881
+21,"Chick-fil-A (39.254078, -76.7131244)",0.2781,0.1874
+22,"Joseph Beuys Sculpture Garden (39.2522681, -76.7100866)",0.2762,0.1784
+23,"Lot 4 (39.254823, -76.7083117)",0.2684,0.1825
+24,"Center Road (39.2558614, -76.7094044)",0.2653,0.1910
+25,"Stadium Lot (39.2533099, -76.7060089)",0.2646,0.1876
