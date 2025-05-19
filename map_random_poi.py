@@ -9,6 +9,7 @@ import random
 from collections import defaultdict
 import warnings
 import numpy as np
+import matplotlib.pyplot as plt
 
 OVERPASS_URL = "http://overpass-api.de/api/interpreter"
 os.environ["OMP_NUM_THREADS"] = "1"
@@ -200,6 +201,8 @@ def Main():
         return
 
     poi_counter = defaultdict(int)
+    utility_values = []
+    privacy_values = []
 
     for x in range(num_runs):
         chosen = random.choice(pois)
@@ -219,7 +222,10 @@ def Main():
         centroid_lon = sum(float(ParsePOI(poi)[2]) for poi in poi_counter) / len(poi_counter)
         privacy = CalculateDistance(coords[0], coords[1], centroid_lat, centroid_lon)
 
-        print(f"Iteration {x}")
+        utility_values.append(utility)
+        privacy_values.append(privacy)
+
+        print(f"Iteration {x + 1}")
         print(f"Privacy = {privacy}")
         print(f"Utility = {utility}")
         print("")
@@ -227,6 +233,24 @@ def Main():
 
 
     CreateMap(coords[0], coords[1], radius, pois, poi_counter, noise)
+
+    plt.figure(figsize=(12, 5))
+
+    plt.subplot(1, 2, 1)
+    plt.plot(range(1, num_runs + 1), utility_values, marker='o', color='green')
+    plt.title('Utility vs Iteration')
+    plt.xlabel('Iteration')
+    plt.ylabel('Utility (Avg Distance to Chosen POIs)')
+
+    plt.subplot(1, 2, 2)
+    plt.plot(range(1, num_runs + 1), privacy_values, marker='o', color='red')
+    plt.title('Privacy vs Iteration')
+    plt.xlabel('Iteration')
+    plt.ylabel('Privacy (Distance to Centroid of POIs)')
+
+    plt.tight_layout()
+    plt.savefig("POI_Utility_Privacy_Graph")
+    plt.show()
 
 if __name__ == "__main__":
     Main()
