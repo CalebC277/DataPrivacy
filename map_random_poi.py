@@ -119,26 +119,17 @@ def CreateMap(lat, lon, rad, pois, poi_counter, noise):
                 fill=True,
                 fill_opacity=1
             ).add_to(Map)
-            offset_points.append((offset_lat, offset_lon))
-
-    with open("random_poi.txt", "w", encoding="utf-8") as file:
-        file.write("Random POI's with noise: (lat, lon): \n")
-        for offset_lat, offset_lon in offset_points:
-            file.write(f"({offset_lat}, {offset_lon})\n")                
+            offset_points.append((offset_lat, offset_lon))               
 
     Map.save("Map.html")
     webbrowser.open('file://' + os.path.realpath("Map.html"))
-
-    with open("POIS.txt", "w", encoding="utf-8") as file:
-        file.write("Points of Interest within the radius:\n\n")
-        for poi in pois:
-            file.write(f"{poi}\n")
 
     with open("chosen_poi.txt", "w", encoding="utf-8") as file:
         sorted_pois = sorted(poi_counter.items(), key=lambda x: x[1], reverse=True)
         for poi, count in sorted_pois:
             if count > 0:
-                file.write(f"{poi} -> chosen {count} times\n")
+                name, lat_str, lon_str = ParsePOI(poi)
+                file.write(f"{name} ({lat_str}, {lon_str})\n")
 
 def CalculateDistance(lat1, lon1, lat2, lon2):
     R = 6371.0
