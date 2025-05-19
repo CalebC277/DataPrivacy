@@ -63,7 +63,7 @@ def main():
         # === map_random_poi.py ===
         print("Running POI-based method...")
         proc = subprocess.Popen(
-            f'python map_random_poi.py',
+            f'python poi.py',
             stdin=subprocess.PIPE,
             stdout=subprocess.PIPE,
             stderr=subprocess.PIPE,
@@ -81,7 +81,7 @@ def main():
         # === map_random_walkable_osrm.py ===
         print("Running OSRM walkable method...")
         proc = subprocess.Popen(
-            f'python map_random_walkable_overpass.py',
+            f'python walkable.py',
             stdin=subprocess.PIPE,
             stdout=subprocess.PIPE,
             stderr=subprocess.PIPE,
