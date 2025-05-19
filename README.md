@@ -4,9 +4,11 @@ This a project to help protect against the priavcy concerns of people and potnen
 
 ## Project 
 
-We focused on creating three completenary tools:
+For the project we implemented three different methods for protecting location data. The three
+different methods all use the user's location and a given radius to grab a suggested location for
+either a pickup or dropoff location. The three methods are listed below.
 
-
+- 
 
 ## Installation and Setup
 
@@ -30,14 +32,19 @@ pip install folium geopy requests numpy pandas matplotlib tqdm
 
 ### Build and Compile
 
-All of these files 
-  - hybrid.py
-  
-
-can be built and comiled by:
+All of these files can be built and comiled by:
 
 ```bash
-python3 file_name.py
+python3 hybrid.py
+```
+```bash
+python3 poi.py
+```
+```bash
+python3 walkable.py
+```
+```bash
+python3 compare.py
 ```
 
 
