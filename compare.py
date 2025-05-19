@@ -50,10 +50,13 @@ def main():
     with open("day_in_a_life.txt", "r", encoding="utf-8") as file:
         lines = [line.strip() for line in file if line.strip()]
 
-    results = []
+    show_popups = False
+    if (lines[0] == 'y' or lines[0] == 'Y'):
+        show_popups = True
 
-    num_runs = lines[0]
-    for i in range(1, len(lines), 2):
+    results = []
+    num_runs = lines[1]
+    for i in range(2, len(lines), 2):
         # Parse the text file for the required input
         address = lines[i]
         radius = float(lines[i + 1])
@@ -72,7 +75,8 @@ def main():
             stdin=subprocess.PIPE,
             stdout=subprocess.PIPE,
             stderr=subprocess.PIPE,
-            text=True
+            text=True,
+            shell=show_popups
         )
         proc.communicate(input=f"address\n{address}\n{radius}\n0.002\n{num_runs}\n")
         time.sleep(2)
@@ -91,7 +95,8 @@ def main():
             stdin=subprocess.PIPE,
             stdout=subprocess.PIPE,
             stderr=subprocess.PIPE,
-            text=True
+            text=True,
+            shell=show_popups
         )
         proc.communicate(input=f"address\n{address}\n{radius}\n{num_runs}\n")
         time.sleep(2)
