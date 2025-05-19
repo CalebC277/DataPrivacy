@@ -5,6 +5,9 @@ import webbrowser
 import os
 import requests
 from tqdm import tqdm
+import numpy as np
+import matplotlib.pyplot as plt
+from collections import defaultdict
 
 # === CONFIG ===
 OVERPASS_URL = "http://overpass-api.de/api/interpreter"
@@ -77,6 +80,22 @@ def save_to_file(points, filename="walkable_overpass.txt"):
         for name, lat, lon, tags, status in points:
             f.write(f"{name}: ({lat}, {lon})\n")
 
+def CalculateDistance(lat1, lon1, lat2, lon2):
+    R = 6371.0
+    lat1_rad = np.radians(lat1)
+    lon1_rad = np.radians(lon1)
+    lat2_rad = np.radians(lat2)
+    lon2_rad = np.radians(lon2)
+
+    dlon = lon2_rad - lon1_rad
+    dlat = lat2_rad - lat1_rad
+
+    a = np.sin(dlat / 2) ** 2 + np.cos(lat1_rad) * np.cos(lat2_rad) * np.sin(dlon / 2) ** 2
+    c = 2 * np.arctan2(np.sqrt(a), np.sqrt(1 - a))
+
+    distance = R * c
+    return distance 
+
 def main():
     ch = input("Type 'Address' or 'Coordinates': ").strip().lower()
     if ch == 'address':
@@ -109,20 +128,73 @@ def main():
         print("Invalid number of points")
         return
 
-    center_lat, center_lon = coords
+    #center_lat, center_lon = coords
 
     print("Finding walkable areas using Overpass API...")
-    walkable_areas = FindWalkableAreas(center_lat, center_lon, radius)
+    total_walkable_areas = FindWalkableAreas(coords[0], coords[1], radius)
 
-    if not walkable_areas:
+    if not total_walkable_areas:
         print("No walkable areas found.")
         return
+    
+    walkable_areas = []
+    utility_values = []
+    privacy_values = []
 
-    walkable_areas = walkable_areas[:num_runs]
-    print(f"Found {len(walkable_areas)} walkable areas.")
+    if len(total_walkable_areas) < num_runs:
+        num_runs = len(total_walkable_areas)
+
+    for x in range(num_runs):
+        chosen = total_walkable_areas[x]
+        walkable_areas.append(chosen)
+
+        utility = 0.0
+        privacy = 0.0
+
+        lat_sum = sum(p[1] for p in walkable_areas)
+        lon_sum = sum(p[2] for p in walkable_areas)
+        centroid_lat = lat_sum / len(walkable_areas)
+        centroid_lon = lon_sum / len(walkable_areas)
+        privacy = CalculateDistance(coords[0], coords[1], centroid_lat, centroid_lon)
+
+        total = 0
+        for _, lat, lon, *_ in walkable_areas:
+            total += CalculateDistance(coords[0], coords[1], lat, lon)
+        utility = total / x
+
+        utility_values.append(utility)
+        privacy_values.append(privacy)
+
+        print(f"Iteration {x + 1}")
+        print(f"Privacy = {privacy}")
+        print(f"Utility = {utility}")
+        print("")
+
+    #walkable_areas = walkable_areas[:num_runs]
+    #print(f"Found {len(walkable_areas)} walkable areas.")
 
     save_to_file(walkable_areas)
-    create_map(center_lat, center_lon, radius, walkable_areas)
+    create_map(coords[0], coords[1], radius, walkable_areas)
+
+    plt.figure(figsize=(12, 5))
+
+    plt.subplot(1, 2, 1)
+    plt.plot(range(1, num_runs + 1), utility_values, marker='o', color='green')
+    plt.title('Utility vs Iteration')
+    plt.xlabel('Iteration')
+    plt.ylabel('Utility (Avg Distance to Chosen POIs)')
+
+    plt.subplot(1, 2, 2)
+    plt.plot(range(1, num_runs + 1), privacy_values, marker='o', color='red')
+    plt.title('Privacy vs Iteration')
+    plt.xlabel('Iteration')
+    plt.ylabel('Privacy (Distance to Centroid of POIs)')
+
+    plt.tight_layout()
+    plt.savefig("Walkable_Utility_Privacy_Graph")
+    plt.show()
+
+    
 
 if __name__ == "__main__":
     main()
