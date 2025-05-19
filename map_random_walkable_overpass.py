@@ -9,7 +9,7 @@ import numpy as np
 import matplotlib.pyplot as plt
 from collections import defaultdict
 
-# === CONFIG ===
+# Using the Overpass API for mapping
 OVERPASS_URL = "http://overpass-api.de/api/interpreter"
 
 def get_coordinates(address):
