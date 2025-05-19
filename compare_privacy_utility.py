@@ -72,7 +72,7 @@ def main():
         proc.communicate(input=f"address\n{address}\n{radius}\n0.002\n{num_runs}\n")
         time.sleep(2)
 
-        poi_coords = extract_coords_from_file("random_poi.txt")
+        poi_coords = extract_coords_from_file("POIs.txt")
         utility_poi = average_distance(coords, poi_coords)
         centroid_poi = centroid(poi_coords)
         privacy_poi = geodesic(coords, centroid_poi).km if centroid_poi[0] is not None else float('inf')
@@ -90,7 +90,7 @@ def main():
         proc.communicate(input=f"address\n{address}\n{radius}\n{num_runs}\n")
         time.sleep(2)
 
-        walkable_coords = extract_coords_from_file("walkable_overpass.txt")
+        walkable_coords = extract_coords_from_file("Walkable.txt")
         utility_osrm = average_distance(coords, walkable_coords)
         centroid_osrm = centroid(walkable_coords)
         privacy_osrm = geodesic(coords, centroid_osrm).km if centroid_osrm[0] is not None else float('inf')
@@ -158,7 +158,7 @@ def main():
     plt.legend()
     plt.grid(True)
     plt.tight_layout()
-    plt.savefig("privacy_utility_tradeoff.png")
+    plt.savefig("Privacy_Utility_Tradeoff.png")
     plt.show()
 
 
