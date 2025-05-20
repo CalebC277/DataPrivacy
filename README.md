@@ -84,7 +84,7 @@ pip install folium geopy requests numpy pandas matplotlib tqdm
 
 ### Build and Compile
 
-All of these files can be built and comiled by:
+All of these files can be built and compiled by:
 
 ```bash
 python3 hybrid.py
